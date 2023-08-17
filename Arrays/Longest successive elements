@@ -1,0 +1,22 @@
+//A sequence is successive when adjacent elements of the sequence have a difference of 1
+//[5,8,3,2,1,4]-->5
+import java.util.*;
+public class Solution {
+    public static int longestSuccessiveElements(int []a) {
+        // Write your code here.
+        int n=a.length,count=1,longest=0;
+        HashSet<Integer> h = new HashSet<>();
+        for(int i=0;i<n;i++) h.add(a[i]);
+        for(int e:h){
+            if(!h.contains(e-1)){
+                while(h.contains(e+1)){
+                    count++;
+                    e++;
+                }
+                longest=Math.max(longest,count);
+                count=1;
+            }
+        }
+        return longest;
+    }
+}
