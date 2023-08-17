@@ -1,0 +1,40 @@
+import java.util.*;
+public class Solution {
+    public static int team(int []skill, int n){
+        // Write your code here.
+        return CIP(skill,0,n-1);
+    }
+    private static int CIP(int skill[], int l, int r){
+        int count=0;
+        if(l<r){
+            int mid=(l+r)/2;
+            count+=CIP(skill,l,mid);
+            count+=CIP(skill,mid+1,r);
+            count+=sample(skill,l,mid,r);
+            merge(skill,l,mid,r);
+        }
+        return count;
+    }
+    private static int sample(int skill[], int l,int m,int r){
+        int j=m+1;
+        int cnt=0;
+        for(int i=l;i<=m;i++){
+            while(j<=r && skill[i]>2*skill[j]) j++;
+            cnt+=(j-(m+1)); 
+        }
+        return cnt;
+    }
+    private static void merge(int skill[], int l, int m, int r){
+        int left[] = Arrays.copyOfRange(skill,l,m+1);
+        int right[] = Arrays.copyOfRange(skill,m+1,r+1);
+        int i=0,j=0,k=l;
+        while(i<left.length && j<right.length){
+            if(left[i]<=right[j]) skill[k++]=left[i++];
+            else{
+                skill[k++]=right[j++];
+            }
+        }
+        while(i<left.length) skill[k++]=left[i++];
+        while(j<right.length) skill[k++]=right[j++];
+    }
+}
