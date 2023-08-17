@@ -1,0 +1,42 @@
+import java.util.*;
+class Interval{
+    int x,y;
+    Interval(int a, int b){
+        x=a;
+        y=b;
+    }
+}
+class Mysort implements Comparator<Interval>{
+    public int compare(Interval a, Interval b){
+        return a.x-b.x;
+    }
+}
+
+public class Solution {
+    public static List< List< Integer > > mergeOverlappingIntervals(int [][]arr){
+        // Write your code here.
+        Interval A[] = new Interval[arr.length];
+        for(int i=0;i<arr.length;i++){
+          A[i]= new Interval(arr[i][0],arr[i][1]);
+        }
+        Arrays.sort(A,new Mysort());
+        int res=0;
+        for(int i=1;i<A.length;i++){
+            if(A[res].y>=A[i].x){
+                A[res].x= Math.min(A[res].x,A[i].x);
+                A[res].y= Math.max(A[res].y,A[i].y);
+            }else{
+                res++;
+                A[res]=A[i];
+            }
+        }
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int i=0;i<=res;i++){
+           ArrayList<Integer> temp = new ArrayList<>();
+           temp.add(A[i].x);
+           temp.add(A[i].y);
+           ans.add(temp);
+        }
+        return ans;
+    }
+}
