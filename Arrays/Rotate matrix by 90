@@ -1,0 +1,25 @@
+//[[1,2][3,4]]---> [[3,1][4,2]]
+import java.util.*;
+public class Solution {
+    public static void rotateMatrix(int [][]mat){
+        // Write your code here.
+        for(int i=0;i<mat.length;i++){
+            for(int j=i+1;j<mat[0].length;j++){
+                int temp=mat[i][j];
+                mat[i][j]=mat[j][i];
+                mat[j][i]=temp;
+            }
+        }
+       for(int i=0;i<mat.length;i++){
+           int p=0,q=mat[0].length-1;
+           while(p<=q){
+               int temp=mat[i][p];
+               mat[i][p]=mat[i][q];
+               mat[i][q]=temp;
+               p++;
+               q--;
+           }
+       }
+
+    }
+}
