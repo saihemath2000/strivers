@@ -1,0 +1,23 @@
+import java.util.*;
+public class Solution {
+    public static int longestSubarrayWithSumK(int []a, long k) {
+        // Write your code here
+        HashMap<Long,Integer> h = new HashMap<>();
+        long sum=0;
+        int max=0;
+		for(int i=0;i<a.length;i++){
+			sum+=a[i];
+			if(sum==k){
+				max=Math.max(max,i+1);
+			}
+			long rem=sum-k;
+			if(h.containsKey(rem)){
+				max=Math.max(max,i-h.get(rem));
+			}
+			if(!h.containsKey(sum)){
+				h.put(sum,i);
+			}
+		}
+		return max;
+    }
+}
