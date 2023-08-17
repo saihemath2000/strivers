@@ -1,0 +1,38 @@
+import java.util.*;
+public class Solution {
+    public static int numberOfInversions(int []a, int n) {
+        // Write your code here.
+        return CIP(a,0,n-1);
+    }
+    private static int CIP(int a[], int l, int r){
+        int count=0;
+        if(l<r){
+          int mid=(l+r)/2;
+          count+=CIP(a,l,mid);
+          count+=CIP(a,mid+1,r);
+          count+=merge(a,l,mid,r);
+        }
+        return count;
+    }
+    private static int merge(int a[], int l,int m,int r){
+        int swaps=0;
+        int left[]= Arrays.copyOfRange(a,l,m+1);
+        int right[] =Arrays.copyOfRange(a,m+1,r+1);
+        int i=0,j=0,k=l;
+        while(i<left.length && j<right.length){
+            if(left[i]<=right[j]){
+                a[k++]=left[i++];
+            }else{
+                swaps+=(m+1-i-l);
+                a[k++]=right[j++];
+            }
+        }
+        while(i<left.length){
+            a[k++]=left[i++];
+        }
+        while(j<right.length){
+            a[k++]=right[j++];
+        }
+        return swaps;
+    }
+}
