@@ -1,0 +1,17 @@
+import java.util.*;
+public class Solution {
+    public static int subarraysWithSumK(int []a, int b) {
+        // Write your code here
+        HashMap<Integer,Integer> h = new HashMap<>();
+        int sum=0,count=0;
+        h.put(0,1);
+        for(int i=0;i<a.length;i++){
+            sum^=a[i];
+            // if(sum==b) count++;
+            int rem=sum^b;
+            if(h.containsKey(rem)) count+=h.get(rem);
+            h.put(sum,h.getOrDefault(sum,0)+1);
+        }
+        return count;
+    }
+}
