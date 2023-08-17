@@ -1,0 +1,31 @@
+import java.util.*;
+public class Solution {
+    public static List< List < Integer > > triplet(int n, int []arr) {
+        // Write your code here.
+        Arrays.sort(arr);
+        List<List<Integer>> ans = new ArrayList<>();
+        int k=0;
+        for(int i=0;i<n-2;i++){
+            int sum=-1*arr[i];
+            int low=i+1,high=arr.length-1;
+            while(low<high){                
+                if(arr[low]+arr[high]==sum){
+                    // System.out.print(arr[i]+"-"+arr[low]+"-"+arr[high]);
+                    // System.out.println();
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(arr[i]);
+                    temp.add(arr[low]);
+                    temp.add(arr[high]);
+                    if(!ans.contains(temp)){
+                       ans.add(temp);
+                       k++;
+                    }
+                    low++;
+                    high--;
+                }else if(arr[low]+arr[high]<sum) low++;
+                else high--;
+            }  
+        }
+        return ans;
+    }
+}
