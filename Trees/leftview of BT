@@ -1,0 +1,19 @@
+import java.util.*;
+
+public class Solution 
+{
+    public static void solve(ArrayList<Integer> ans, TreeNode<Integer> root, int lvl) {
+        if (root == null)
+            return;
+        if(lvl == ans.size()){
+            ans.add(root.data);
+        }
+        solve(ans, root.left, lvl+1);
+        solve(ans, root.right, lvl+1);
+    }
+    public static ArrayList<Integer> getLeftView(TreeNode<Integer> root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        solve(ans, root, 0);
+        return ans;
+    } 
+}
