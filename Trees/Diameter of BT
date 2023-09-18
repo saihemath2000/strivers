@@ -1,0 +1,17 @@
+// Length of the longest path between any two nodes in a tree
+public class Solution {
+    public static int diameterOfBinaryTree(TreeNode<Integer> root) {
+        int res[]= {0};
+        solve(root,res);
+        // Write your code here.
+        return res[0];
+    }
+    public static int solve(TreeNode<Integer> root,int res[]){
+       if(root==null) return 0;
+       //if(root.left==null && root.right==null) return 1;
+        int l= solve(root.left,res);
+        int r= solve(root.right,res);
+        res[0]=Math.max(res[0],l+r);
+        return 1+Math.max(l,r);
+    }
+}
