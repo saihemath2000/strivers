@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Pair{
+    TreeNode node;
+    int value;
+    Pair(TreeNode n, int h){
+        node=n;
+        value=h;
+    }
+}
+public class Solution {
+    public static List<Integer> getTopView(TreeNode root) {
+        // Write your code here.
+        ArrayList<Integer> ans = new ArrayList<>();
+        Map<Integer,Integer> h = new TreeMap<>();
+        Queue<Pair> q = new ArrayDeque<>();
+        q.add(new Pair(root,0));
+        while(!q.isEmpty()){
+            Pair curr= q.poll();
+            TreeNode cnode= curr.node;
+            int value=curr.value;
+            if(!h.containsKey(value)){
+                h.put(value,cnode.data);
+            }
+            if(cnode.left!=null) q.add(new Pair(cnode.left,value-1));
+            if(cnode.right!=null) q.add(new Pair(cnode.right,value+1));
+        }
+        for(Map.Entry<Integer,Integer> e:h.entrySet()){
+            ans.add(e.getValue());
+        }
+        return ans;
+    }
+}
