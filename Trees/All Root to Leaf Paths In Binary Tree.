@@ -1,0 +1,22 @@
+import java.util.*;
+public class Solution {
+    public static List<String> allRootToLeaf(BinaryTreeNode root) {
+        // Write your code here.
+        ArrayList<String> res = new ArrayList<>();
+        solve(root,"",res);
+        return res;
+    }
+    public static void solve(BinaryTreeNode root,String temp,ArrayList<String> res){
+        if(root==null) return;
+        if(temp.isEmpty())
+          temp+=root.data;
+        else
+          temp+=" "+root.data;  
+        if(root.left==null && root.right==null){
+            res.add(temp);
+            return;
+        }
+        solve(root.left,temp,res);
+        solve(root.right,temp,res);
+    }
+}
