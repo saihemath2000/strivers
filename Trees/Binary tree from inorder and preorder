@@ -1,0 +1,21 @@
+import java.util.*;
+public class Solution {
+    static int index=0;
+    public static TreeNode buildBinaryTree(int[] inorder, int[] preorder) {
+        // Write your code here.
+        Map<Integer,Integer> h = new HashMap<>();
+        for(int i=0;i<inorder.length;i++){
+            h.put(inorder[i],i);
+        }
+        return solve(inorder,preorder,0,inorder.length-1,h);
+    }
+    public static TreeNode solve(int in[],int pre[],int is,int ie,Map<Integer,Integer> h){
+      if(is>ie || index>=pre.length)
+        return null;  
+      TreeNode root = new TreeNode(pre[index++]);  
+      int inindex = h.get(root.data);
+      root.left = solve(in,pre,is,inindex-1,h);
+      root.right = solve(in,pre,inindex+1,ie,h);
+      return root;
+    } 
+}
