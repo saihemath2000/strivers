@@ -1,0 +1,18 @@
+public class Solution {
+    static int res=0;
+    public static int maxPathSum(BinaryTreeNode<Integer> root) {
+        // Write your code here
+        solve(root);
+        return res;
+    }
+    public static int solve(BinaryTreeNode<Integer> root){
+        if(root==null) return 0;
+        int l = solve(root.left);
+        int r = solve(root.right);
+        l= Math.max(l,0);
+        r= Math.max(r,0);
+        res= Math.max(res,root.data+l+r);
+        if(root.left==null && root.right==null) return root.data;
+        return Math.max(root.data+l,root.data+r);
+    }
+}
