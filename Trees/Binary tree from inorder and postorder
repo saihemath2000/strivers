@@ -1,0 +1,20 @@
+import java.util.*;
+public class Solution {
+    public static TreeNode<Integer> getTreeFromPostorderAndInorder(int[] postOrder, int[] inOrder) {
+        // Write your code here
+        Map<Integer,Integer> h= new HashMap<>();
+        for(int i=0;i<inOrder.length;i++)
+          h.put(inOrder[i],i);
+        return solve(inOrder,0,inOrder.length-1,postOrder,0,postOrder.length-1,h);  
+    }
+    public static TreeNode<Integer> solve(int in[],int is,int ie,int post[],int ps,int pe,Map<Integer,Integer> h){
+        if(is>ie || ps>pe) 
+          return null;
+        TreeNode<Integer> root = new TreeNode<Integer>(post[pe]);
+        int inindex = h.get(root.data);
+        int ele = inindex-is;
+        root.left = solve(in,is,inindex-1,post,ps,ps+ele-1,h);
+        root.right= solve(in,inindex+1,ie,post,ps+ele,pe-1,h);
+        return root;  
+    }
+}
