@@ -1,4 +1,4 @@
-//tabulation bottom-up
+//tabulation bottom-up;can also space optimize by using two variables instead of dp array
 import java.util.*;
 class fibonacci{
   public static void main(String args[]) {
