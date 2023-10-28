@@ -1,0 +1,69 @@
+// Recursion
+public static int frogJump(int n, int heights[]) {
+
+        // Write your code here.
+        return f(n-1,heights);
+    }
+    public static int f(int val, int heights[]){
+        if(val==0)
+          return 0;
+        int left = f(val-1,heights)+Math.abs(heights[val]-heights[val-1]);
+        int right= Integer.MAX_VALUE;
+        if(val>1)
+           right=f(val-2,heights)+Math.abs(heights[val]-heights[val-2]);
+        return Math.min(left,right);     
+}
+
+//Memoization
+public static int frogJump(int n, int heights[]) {
+
+        // Write your code here.
+        int dp[] = new int[n+1];
+        Arrays.fill(dp,-1);
+        return f(n-1,heights,dp);
+}
+public static int f(int val, int heights[],int dp[]){
+        if(val==0)
+          return 0;
+        if(dp[val]!=-1)
+          return dp[val];  
+        int left = f(val-1,heights,dp)+Math.abs(heights[val]-heights[val-1]);
+        int right= Integer.MAX_VALUE;
+        if(val>1)
+           right=f(val-2,heights,dp)+Math.abs(heights[val]-heights[val-2]);
+        return dp[val]=Math.min(left,right);     
+}
+
+//Tabulation
+public static int frogJump(int n, int heights[]) {
+
+        // Write your code here.
+        int dp[] = new int[n];
+        dp[0]=0;
+        for(int i=1;i<n;i++){
+            int left= dp[i-1]+Math.abs(heights[i]-heights[i-1]);
+            int right= Integer.MAX_VALUE;
+            if(i>1)
+              right = dp[i-2]+Math.abs(heights[i]-heights[i-2]);
+            dp[i]= Math.min(left,right);  
+        }
+        return dp[n-1];
+}
+
+//Optimized Tabulation
+public static int frogJump(int n, int heights[]) {
+
+        // Write your code here.
+        int prev=0,pprev=0;
+        int curr=0;
+        for(int i=1;i<n;i++){
+            int left= prev+Math.abs(heights[i]-heights[i-1]);
+            int right= Integer.MAX_VALUE;
+            if(i>1)
+              right = pprev+Math.abs(heights[i]-heights[i-2]);
+            curr= Math.min(left,right);
+            pprev=prev;
+            prev=curr;  
+        }
+        return prev;
+}
