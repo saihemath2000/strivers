@@ -1,0 +1,32 @@
+
+//Optimized tabulation same as before question with slight change
+public static long mNAS(ArrayList<Long> nums) {
+		// Write your code here.
+		int n = nums.size();
+		long prev=nums.get(0),pprev=nums.get(0),curr=0;
+		for(int i=1;i<n;i++){
+		   long pick=nums.get(i);
+		   if(i>1)	
+		    pick+=pprev;
+		   long notpick =prev;
+		   curr=Math.max(pick,notpick);
+		   pprev=prev;
+		   prev=curr;	
+		}
+		return prev;
+}
+public static long houseRobber(int[] valueInHouse) {
+		// Write your code here.
+		int n = valueInHouse.length;
+		ArrayList<Long> temp1= new ArrayList<>();
+		ArrayList<Long> temp2= new ArrayList<>();
+		if(n==1)
+		  return valueInHouse[0];
+		for(int i=0;i<n;i++){
+			if(i!=0)
+			  temp1.add((long)valueInHouse[i]);
+			if(i!=n-1)
+			  temp2.add((long)valueInHouse[i]);  
+		}
+		return Math.max(mNAS(temp1),mNAS(temp2));  		
+}
