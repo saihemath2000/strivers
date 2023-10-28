@@ -1,0 +1,66 @@
+//recursion
+public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+		// Write your code here.
+		return f(nums.size()-1,nums);
+}
+public static int f(int n,ArrayList<Integer> nums){
+		if(n==0)
+		  return nums.get(0);
+		if(n<0)
+		  return 0;  
+		int pick = nums.get(n)+f(n-2,nums);
+		int notpick = f(n-1,nums);
+		return Math.max(pick,notpick);  
+}
+
+//Memoization
+public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+		// Write your code here.
+		int dp[] = new int[nums.size()+1];
+		Arrays.fill(dp,-1);
+		return f(nums.size()-1,nums,dp);
+}
+public static int f(int n,ArrayList<Integer> nums,int dp[]){
+		if(n==0)
+		  return nums.get(0);
+		if(n<0)
+		  return 0;
+        if(dp[n]!=-1)
+		   return dp[n];
+		int pick = nums.get(n)+f(n-2,nums,dp);
+		int notpick = f(n-1,nums,dp);
+		return dp[n]=Math.max(pick,notpick);  
+}
+
+//Tabulation
+public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+		// Write your code here.
+		int n = nums.size();
+		int dp[] = new int[n];
+		dp[0]=nums.get(0);
+		for(int i=1;i<n;i++){
+		   int pick=nums.get(i);
+		   if(i>1)	
+		    pick+=dp[i-2];
+		   int notpick = dp[i-1];
+		   dp[i]=Math.max(pick,notpick);	
+		}
+		return dp[n-1];
+}
+
+//Optimized tabulation
+public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+		// Write your code here.
+		int n = nums.size();
+		int prev=nums.get(0),pprev=nums.get(0),curr=0;
+		for(int i=1;i<n;i++){
+		   int pick=nums.get(i);
+		   if(i>1)	
+		    pick+=pprev;
+		   int notpick =prev;
+		   curr=Math.max(pick,notpick);
+		   pprev=prev;
+		   prev=curr;	
+		}
+		return prev;
+}
