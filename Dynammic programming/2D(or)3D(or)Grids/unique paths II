@@ -1,0 +1,45 @@
+//tabulation
+static int mazeObstacles(int n, int m, ArrayList<ArrayList<Integer>> mat) {
+        // Write your code here.
+        int mod=(int)(1e9+7);
+        int dp[][]=new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat.get(i).get(j)==-1) 
+                    continue;
+                else if(i==0 && j==0) 
+                    dp[i][j]=1;
+                else{
+                    int up=0,left=0;
+                    if(i>0) up=dp[i-1][j];
+                    if(j>0) left=dp[i][j-1];
+                    dp[i][j]=(up+left)%mod;
+                }
+            }
+        }
+        return dp[n-1][m-1]; 
+}
+
+//optimized tabulation
+static int mazeObstacles(int n, int m, ArrayList<ArrayList<Integer>> mat) {
+        // Write your code here.
+        int mod=(int)(1e9+7);
+        int prev[]= new int[m];
+        for(int i=0;i<n;i++){
+            int curr[]= new int[m];
+            for(int j=0;j<m;j++){
+                if(mat.get(i).get(j)==-1) 
+                    continue;
+                else if(i==0 && j==0) 
+                    curr[j]=1;
+                else{
+                    int up=0,left=0;
+                    if(i>0) up=prev[j];
+                    if(j>0) left=curr[j-1];
+                    curr[j]=(up+left)%mod;
+                }
+            }
+            prev=curr;
+        }
+        return prev[m-1]; 
+}
