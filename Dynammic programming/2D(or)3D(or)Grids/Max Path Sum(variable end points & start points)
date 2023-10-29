@@ -1,0 +1,76 @@
+//Memoization
+public static int getMaxPathSum(int[][] matrix) {
+		// Write your code here
+		int n= matrix.length;
+		int m= matrix[0].length;
+		int max=Integer.MIN_VALUE;
+		for(int i=0;i<m;i++){
+			int dp[][]= new int[n][m];
+			for(int row[]:dp)
+			   Arrays.fill(row,-1);
+			int ans= f(matrix,n-1,i,dp);
+			max= Math.max(max,ans);
+		}
+		return max;
+}
+public static int f(int matrix[][],int i,int j,int dp[][]){
+		if(j<0 || j>=matrix[0].length)
+		  return Integer.MIN_VALUE;
+		if(i==0)
+		  return matrix[0][j];
+		if(dp[i][j]!=-1)
+		   return dp[i][j];  
+		int st = f(matrix,i-1,j,dp);
+		int ld=  f(matrix,i-1,j-1,dp);
+		int rd = f(matrix,i-1,j+1,dp);
+		return dp[i][j]=matrix[i][j]+Math.max(st,Math.max(ld,rd));    
+}
+
+//Tabulation
+public static int getMaxPathSum(int[][] matrix) {
+		// Write your code here
+		int n= matrix.length;
+		int m= matrix[0].length;
+		int max=Integer.MIN_VALUE;
+		int dp[][]= new int[n][m];
+		for(int i=0;i<m;i++)
+		  dp[0][i]=matrix[0][i];
+		for(int i=1;i<n;i++){
+			for(int j=0;j<m;j++){
+				int st= dp[i-1][j];
+				int ld= (j-1)>=0?dp[i-1][j-1]:Integer.MIN_VALUE;
+				int rd= (j+1)<m?dp[i-1][j+1]:Integer.MIN_VALUE;
+				dp[i][j]= matrix[i][j]+Math.max(st,Math.max(ld,rd));
+			}
+		}  
+		for(int i=0;i<m;i++){
+			max= Math.max(dp[n-1][i],max);
+		}
+		return max;
+}
+
+// Optimized Tabulation
+public static int getMaxPathSum(int[][] matrix) {
+		// Write your code here
+		int n= matrix.length;
+		int m= matrix[0].length;
+		int max=Integer.MIN_VALUE;
+		int dp[][]= new int[n][m];
+		int prev[]= new int[m];
+		int curr[]= new int[m];
+		for(int i=0;i<m;i++)
+		  prev[i]=matrix[0][i];
+		for(int i=1;i<n;i++){
+			for(int j=0;j<m;j++){
+				int st= prev[j];
+				int ld= (j-1)>=0?prev[j-1]:Integer.MIN_VALUE;
+				int rd= (j+1)<m?prev[j+1]:Integer.MIN_VALUE;
+				curr[j]= matrix[i][j]+Math.max(st,Math.max(ld,rd));
+			}
+			prev=curr.clone();
+		}  
+		for(int i=0;i<m;i++){
+			max= Math.max(prev[i],max);
+		}
+		return max;
+}
