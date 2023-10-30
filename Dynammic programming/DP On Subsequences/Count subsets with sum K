@@ -1,0 +1,87 @@
+// Recursion
+public static int findWays(int num[], int tar) {
+        // Write your code here.
+        return f(num,tar,num.length-1);
+}
+public static int f(int num[],int tar,int index){
+        if(tar==0) return 1;
+        if(index==0)
+          return num[0]==tar?1:0;
+        int notpick =f(num,tar,index-1);
+        int pick =0;
+        if(num[index]<=tar)
+          pick = f(num,tar-num[index],index-1);
+        return pick+notpick;    
+
+}
+
+//Memoization
+public static int findWays(int num[], int tar) {
+        // Write your code here.
+        int mod=(int)1e9+7;
+        int dp[][]= new int[num.length][tar+1];
+        for(int arr[]:dp)
+          Arrays.fill(arr,-1);
+        return f(num,tar,num.length-1,dp)%mod;
+}
+public static int f(int num[],int tar,int index,int dp[][]){
+        if(tar==0) return 1;
+        int mod=(int)1e9+7;
+        if(index==0)
+          return num[0]==tar?1:0;
+        if(dp[index][tar]!=-1)
+          return dp[index][tar]%mod;  
+        int notpick =f(num,tar,index-1,dp);
+        int pick =0;
+        if(num[index]<=tar)
+          pick = f(num,tar-num[index],index-1,dp);
+        return dp[index][tar]=(pick+notpick)%mod;    
+
+}
+
+//Tabulation
+public static int findWays(int num[], int tar) {
+        // Write your code here.
+        int mod=(int)1e9+7;
+        int n= num.length;
+        int dp[][]= new int[n][tar+1];
+        for(int i=0;i<n;i++){
+          dp[i][0]=1;
+        }
+        if(num[0]<=tar)
+          dp[0][num[0]]=1;
+        for(int i=1;i<n;i++){
+          for(int k=1;k<=tar;k++){
+            int notpick= dp[i-1][k];
+            int pick=0;
+            if(num[i]<=k)
+              pick=dp[i-1][k-num[i]];
+            dp[i][k]=(pick+notpick)%mod;  
+          }
+        }    
+        return (dp[n-1][tar])%mod;
+}
+
+//Optimized tabulation
+public static int findWays(int num[], int tar) {
+        // Write your code here.
+        int mod=(int)1e9+7;
+        int n= num.length;
+        int prev[]= new int[tar+1];
+        prev[0]=1;
+        if(num[0]<=tar)
+          prev[num[0]]=1;
+        for(int i=1;i<n;i++){
+          int curr[]= new int[tar+1];
+          curr[0]=1;
+          for(int k=1;k<=tar;k++){
+            int notpick= prev[k];
+            int pick=0;
+            if(num[i]<=k)
+              pick=prev[k-num[i]];
+            curr[k]=(pick+notpick)%mod;  
+          }
+          prev=curr;
+        }    
+        return (prev[tar])%mod;
+}
