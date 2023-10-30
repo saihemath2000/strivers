@@ -1,0 +1,28 @@
+public static int minSubsetSumDifference(int []arr, int n) {
+        // Write your code here.
+        int k=0;
+        for(int i=0;i<n;i++)
+          k+=arr[i];
+        boolean prev[]= new boolean[k+1];
+        prev[0]=true;
+        if(arr[0]<=k)   
+            prev[arr[0]]=true;
+        for(int i=1;i<n;i++){
+          boolean curr[]= new boolean[k+1];
+          curr[0]=true;  
+          for(int target=1;target<=k;target++){
+            boolean nottaken= prev[target];
+            boolean taken = false;
+            if(arr[i]<=target)
+                taken= prev[target-arr[i]];
+            curr[target]=(taken||nottaken); 
+          }
+          prev=curr.clone();
+        }       
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i<=k/2;i++){
+            if(prev[i]==true)
+              min=Math.min(min,Math.abs(k-i-i));
+        }
+        return min;
+    }
