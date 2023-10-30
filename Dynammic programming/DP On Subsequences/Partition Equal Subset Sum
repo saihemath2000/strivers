@@ -1,0 +1,86 @@
+//Memoization
+public static boolean canPartition(int[] arr, int n) {
+		// Write your code here.
+		int totalsum=0;
+		for(int x:arr)
+		   totalsum+=x;
+		if(totalsum%2!=0)
+		  return false;
+		else{
+		  int dp[][]= new int[n][totalsum/2+1];
+		  for(int row[]:dp)
+		     Arrays.fill(row,-1);	 
+		  return f(arr,n-1,totalsum/2,dp);
+		}     
+}
+public static boolean f(int arr[],int n,int target,int dp[][]){
+		if(target==0)
+		   return true;
+		if(n==0)
+		   return target==arr[0];
+		if(dp[n][target]!=-1)
+		  return dp[n][target]==1?true:false;   
+		boolean nottaken = f(arr,n-1,target,dp);   
+		boolean taken=false;   
+		if(arr[n]<=target)
+		    taken= f(arr,n-1,target-arr[n],dp);
+		dp[n][target]=(taken||nottaken)?1:0;			
+		return (taken||nottaken);	      
+}
+
+//tabulation
+public static boolean canPartition(int[] arr, int n) {
+		// Write your code here.
+		int totalsum=0;
+		for(int x:arr)
+		   totalsum+=x;
+		if(totalsum%2!=0)
+		  return false;
+		else{
+		  int target=(totalsum/2);	
+		  boolean dp[][]= new boolean[n][target+1];
+		  for(int i=0;i<n;i++){
+			  dp[i][0]=true;
+		  }
+		  dp[0][arr[0]]=true;
+		  for(int i=1;i<n;i++){
+			  for(int k=1;k<=target;k++){
+				  boolean nottaken = dp[i-1][k];
+				  boolean taken=false;
+				  if(arr[i]<=k)
+				    taken = dp[i-1][k-arr[i]];
+				  dp[i][k]=(taken||nottaken);	
+			  }
+		  }
+		  return dp[n-1][target];
+		}     
+}
+
+//tabulation optimized
+public static boolean canPartition(int[] arr, int n) {
+		// Write your code here.
+		int totalsum=0;
+		for(int x:arr)
+		   totalsum+=x;
+		if(totalsum%2!=0)
+		  return false;
+		else{
+		  int target=(totalsum/2);	
+		  boolean prev[]= new boolean[target+1];
+		  prev[0]=true;
+		  prev[arr[0]]=true;
+		  for(int i=1;i<n;i++){
+			  boolean curr[]= new boolean[target+1];
+			  curr[0]=true;
+			  for(int k=1;k<=target;k++){
+				  boolean nottaken = prev[k];
+				  boolean taken=false;
+				  if(arr[i]<=k)
+				    taken = prev[k-arr[i]];
+				  curr[k]=(taken||nottaken);	
+			  }
+			  prev=curr.clone();
+		  }
+		  return prev[target];
+		}     
+}
