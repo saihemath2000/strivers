@@ -89,18 +89,3 @@ static int knapsack(int[] weight, int[] value, int n, int maxWeight) {
        }
        return prev[maxWeight];
 }
-public static int f(int weight[],int value[],int n,int Target,int dp[][]){
-        if(n==0){
-            if(weight[n]<=Target)
-               return value[n];
-            else 
-              return 0;   
-        }
-        if(dp[n][Target]!=-1)
-          return dp[n][Target];
-        int nottake = f(weight,value,n-1,Target,dp);
-        int take=Integer.MIN_VALUE;
-        if(weight[n]<=Target)
-           take= value[n]+f(weight,value,n-1,Target-weight[n],dp);
-        return dp[n][Target]=Math.max(take,nottake);   
-}
