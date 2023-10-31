@@ -1,0 +1,100 @@
+//Recursion
+public static int minimumElements(int num[], int x) {
+        // Write your code here..
+        int ans= f(num,num.length-1,x);
+        if(ans>=(int)Math.pow(10,9))
+          return -1;
+        return ans;  
+}
+public static int f(int num[],int index,int target){
+        if(index==0){
+            if(target%num[0]==0)
+              return target/num[0];
+            else 
+              return (int)Math.pow(10,9);  
+        }
+        int nottake=f(num,index-1,target);
+        int take=(int)Math.pow(10,9);
+        if(num[index]<=target)
+           take=1+f(num,index,target-num[index]);
+        return Math.min(take,nottake);   
+}
+
+//Memoization
+public static int minimumElements(int num[], int x) {
+        // Write your code here..
+        int dp[][]= new int[num.length][x+1];
+        for(int row[]:dp)
+          Arrays.fill(row,-1);
+        int ans= f(num,num.length-1,x,dp);
+        if(ans>=(int)Math.pow(10,9))
+          return -1;
+        return ans;  
+}
+public static int f(int num[],int index,int target,int dp[][]){
+        if(index==0){
+            if(target%num[0]==0)
+              return target/num[0];
+            else 
+              return (int)Math.pow(10,9);  
+        }
+        if(dp[index][target]!=-1)
+          return dp[index][target];
+        int nottake=f(num,index-1,target,dp);
+        int take=(int)Math.pow(10,9);
+        if(num[index]<=target)
+           take=1+f(num,index,target-num[index],dp);
+        return dp[index][target]=Math.min(take,nottake);   
+}
+
+//tabulation
+public static int minimumElements(int num[], int x) {
+        // Write your code here..
+        int n =num.length;
+        int dp[][]= new int[n][x+1];
+        for(int i=0;i<=x;i++){
+            if(i%num[0]==0)
+              dp[0][i]=i/num[0];
+            else
+              dp[0][i]=(int)Math.pow(10,9);  
+        }
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=x;j++){
+                int taken=(int)Math.pow(10,9);
+                if(num[i]<=j)
+                   taken=1+dp[i][j-num[i]];
+                int nottaken= dp[i-1][j];
+                dp[i][j]= Math.min(taken,nottaken);   
+            }
+        }
+        if(dp[n-1][x]>=(int)Math.pow(10,9))
+          return -1;
+        return dp[n-1][x];  
+}
+
+//optimized tabulation
+public static int minimumElements(int num[], int x) {
+        // Write your code here..
+        int n =num.length;
+        int curr[]= new int[x+1];
+        int prev[]= new int[x+1];
+        for(int i=0;i<=x;i++){
+            if(i%num[0]==0)
+              prev[i]=i/num[0];
+            else
+              prev[i]=(int)Math.pow(10,9);  
+        }
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=x;j++){
+                int taken=(int)Math.pow(10,9);
+                if(num[i]<=j)
+                   taken=1+prev[j-num[i]];
+                int nottaken= prev[j];
+                curr[j]= Math.min(taken,nottaken);   
+            }
+            prev=curr;
+        }
+        if(prev[x]>=(int)Math.pow(10,9))
+          return -1;
+        return prev[x];  
+}
