@@ -1,0 +1,55 @@
+//recursion
+public static int unboundedKnapsack(int n, int w, int[] profit, int[] weight) {
+        // Write your code here.
+        return f(n-1,w,profit,weight);
+}
+public static int f(int index,int target,int profit[],int weight[]){
+        if(index==0){
+            return (int)(target/weight[0])*profit[0];
+        }
+        int taken=Integer.MIN_VALUE;
+        if(weight[index]<=target)
+           taken=profit[index]+f(index,target-weight[index],profit,weight);
+        int nottaken = f(index-1,target,profit,weight);
+        return Math.max(taken,nottaken);
+}
+
+//memoization
+public static int unboundedKnapsack(int n, int w, int[] profit, int[] weight) {
+        // Write your code here.
+        int dp[][]= new int[n][w+1];
+        for(int row[]:dp)
+           Arrays.fill(row,-1);
+        return f(n-1,w,profit,weight,dp);
+}
+public static int f(int index,int target,int profit[],int weight[],int dp[][]){
+        if(index==0){
+            return (int)(target/weight[0])*profit[0];
+        }
+        if(dp[index][target]!=-1)
+          return dp[index][target];
+        int taken=Integer.MIN_VALUE;
+        if(weight[index]<=target)
+           taken=profit[index]+f(index,target-weight[index],profit,weight,dp);
+        int nottaken = f(index-1,target,profit,weight,dp);
+        return dp[index][target]=Math.max(taken,nottaken);
+}
+
+//Tabulation
+public static int unboundedKnapsack(int n, int w, int[] profit, int[] weight) {
+        // Write your code here.
+        int dp[][]= new int[n][w+1];
+        for(int i=weight[0];i<=w;i++){
+            dp[0][i]=(int)(i/weight[0])*profit[0];
+        }
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=w;j++){
+                int taken= Integer.MIN_VALUE;
+                if(weight[i]<=j)
+                  taken=profit[i]+dp[i][j-weight[i]];
+                int nottaken= dp[i-1][j];
+                dp[i][j]= Math.max(taken,nottaken);  
+            }
+        }
+        return dp[n-1][w];
+}
