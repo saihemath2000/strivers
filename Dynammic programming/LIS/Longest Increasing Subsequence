@@ -1,0 +1,68 @@
+//recursion
+public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+		return f(arr,0,-1);
+}
+public static int f(int arr[],int index,int prev){
+		if(index==arr.length)
+		  return 0;
+		int nottaken= f(arr,index+1,prev);
+		int taken=0;
+		if(prev==-1 || arr[index]>arr[prev])
+		  taken = 1+f(arr,index+1,index);
+		return Math.max(taken,nottaken);    
+}
+
+//memoization ---> dont pass all cases
+public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+		int n= arr.length;
+		int dp[][]= new int[n][n+1];
+		for(int row[]:dp)
+		  Arrays.fill(row,-1);
+		return f(arr,0,-1,dp);
+}
+public static int f(int arr[],int index,int prev,int dp[][]){
+		if(index==arr.length)
+		  return 0;
+		if(dp[index][prev+1]!=-1)
+		  return dp[index][prev+1];  
+		int nottaken= f(arr,index+1,prev,dp);
+		int taken=0;
+		if(prev==-1 || arr[index]>arr[prev])
+		  taken = 1+f(arr,index+1,index,dp);
+		return dp[index][prev+1]=Math.max(taken,nottaken);    
+}
+
+// Binary Search O(nlogn) approach
+public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+		int n= arr.length;
+		ArrayList<Integer> temp= new ArrayList<>();
+		temp.add(arr[0]);
+		for(int i=1;i<n;i++){
+			if(arr[i]>temp.get(temp.size()-1))
+			  temp.add(arr[i]);
+			else{
+				int ind = lowerbound(temp,0,temp.size()-1,arr[i]);
+				temp.set(ind,arr[i]);
+			}
+			    
+		}
+		return temp.size();
+}
+public static int lowerbound(ArrayList<Integer> temp,int start,int end,int ele){
+		int ans=0;
+		while(start<=end){
+		  int mid= (start+end)/2;
+		  if(temp.get(mid)==ele)
+		    return mid;
+		  else if(temp.get(mid)<ele)
+		    start=mid+1;
+	      else{
+			  ans= mid;
+			  end=mid-1;
+		  }				
+		}
+		return ans;    
+}
