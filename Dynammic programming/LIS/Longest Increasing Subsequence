@@ -34,6 +34,22 @@ public static int f(int arr[],int index,int prev,int dp[][]){
 		return dp[index][prev+1]=Math.max(taken,nottaken);    
 }
 
+//Tabulation
+public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+	    int n= arr.length;
+	    int dp[][]= new int[n+1][n+1];
+	    for(int ind=n-1;ind>=0;ind--){
+		   for(int prev=ind-1;prev>=-1;prev--){
+			   int len= dp[ind+1][prev+1];
+		       if(prev==-1 || arr[ind]>arr[prev])
+		        len= Math.max(len,1+dp[ind+1][ind+1]);
+			   dp[ind][prev+1]=len; 	 	
+		    }
+	    }
+		return dp[0][0];		
+}
+
 // Binary Search O(nlogn) approach
 public static int longestIncreasingSubsequence(int arr[]) {
 		//Your code goes here
