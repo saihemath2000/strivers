@@ -1,0 +1,52 @@
+//Memoization
+static int maxCoins(int i,int j,ArrayList<Integer> a,int dp[][]){
+        if (i > j) return 0;
+        if(dp[i][j]!=-1)
+           return dp[i][j];
+        int maxi = Integer.MIN_VALUE;
+        for (int ind = i; ind <= j; ind++) {
+            int cost = a.get(i - 1) * a.get(ind) * a.get(j + 1)
+                       + maxCoins(i,ind-1,a,dp)+maxCoins(ind+1,j,a,dp);
+            maxi = Math.max(maxi, cost);
+        }
+        return dp[i][j]=maxi;
+}
+public static int burstBalloons(int []arr){
+        // Write your code here.
+        ArrayList<Integer> a = new ArrayList<>();
+        for(int x:arr)
+           a.add(x);
+        int n = a.size();
+        int dp[][]= new int[n+1][n+1];
+        for(int row[]:dp)
+          Arrays.fill(row,-1);
+        a.add(1);
+        a.add(0, 1);
+        return maxCoins(1,n,a,dp);
+}
+
+//Tabulation
+public static int burstBalloons(int []arr){
+        // Write your code here.
+        ArrayList<Integer> a = new ArrayList<>();
+        for(int x:arr)
+           a.add(x);
+        int n = a.size();
+        int dp[][]= new int[n+2][n+2];
+        a.add(0, 1);
+        a.add(1);
+        for(int i=n;i>=1;i--){
+            for(int j=1;j<=n;j++){
+                if(i>j)
+                  continue;
+                int maxi = Integer.MIN_VALUE;
+                for(int ind = i;ind <= j;ind++){
+                    int cost = a.get(i - 1) * a.get(ind) * a.get(j + 1)
+                       + dp[i][ind-1]+dp[ind+1][j];
+                    maxi = Math.max(maxi, cost);
+                }  
+                dp[i][j]=maxi;       
+            }
+        }
+        return dp[1][n];
+}
