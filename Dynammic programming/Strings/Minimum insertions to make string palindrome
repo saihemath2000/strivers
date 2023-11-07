@@ -1,5 +1,6 @@
 // for any string keep the longest palindrome subsequence part as static and add other chars front and back to make it palindrome
 // for string "codingninjas" ----> keep "ingni" part as it is and add "cod" at back as "doc" and "njas" as "sajn" at front---> "codsajningninjasdoc"
+// that means ---> totallength-len(LCS)
 
 public static int minInsertion(String str) {
     int m= str.length();
