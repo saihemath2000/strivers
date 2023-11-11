@@ -1,0 +1,104 @@
+//recurison
+public static int evaluateExp(String exp) {
+        // Write your code here.
+        return f(exp,0,exp.length()-1,1);
+}
+public static int f(String exp,int i,int j,int istrue){
+        int mod= (int)(1e9+7);       
+        if(i>j)
+          return 0;
+        if(i==j){
+            if(istrue==1){
+                return exp.charAt(i)=='T'?1:0;
+            }
+            else 
+               return exp.charAt(i)=='F'?1:0;
+        }
+        int ways=0;
+        for(int ind=i+1;ind<=j-1;ind+=2){
+            int lt= f(exp,i,ind-1,1);
+            int lf= f(exp,i,ind-1,0);
+            int rt= f(exp,ind+1,j,1);
+            int rf= f(exp,ind+1,j,0);
+            if(exp.charAt(ind)=='&'){
+                if(istrue==1){
+                  ways= (ways+(lt*rt)%mod)%mod;
+                }
+                else
+                  ways= (ways+(lf*rf)%mod+(lt*rf)%mod+(lf*rt)%mod)%mod;
+            }
+            else if(exp.charAt(ind)=='|'){
+               if(istrue==1){
+                   ways= (ways+(lf*rt)%mod+(lt*rt)%mod+(lt*rf)%mod)%mod;
+               }
+               else
+                   ways= (ways+(lf*rf)%mod)%mod;
+            }
+            else{
+                if(istrue==1)
+                  ways= (ways+(lf*rt)%mod+(lt*rf)%mod)%mod;
+                else
+                  ways= (ways+(lt*rt)%mod+(lf*rf)%mod)%mod;  
+            }
+        }  
+        return ways;
+}
+
+//Memoization
+static final int MOD = 1000000007;
+    public static int evaluateExp(String exp) {
+        int n = exp.length();
+        Long[][][] dp = new Long[n][n][2]; 
+        return (int)evaluateExpressionWays(exp,0,n-1,1,dp);
+}
+
+static long evaluateExpressionWays(String exp, int i, int j, int isTrue, Long[][][] dp) {
+        // Base case 1: When the start index is greater than the end index, no ways to evaluate.
+        if (i > j) {
+            return 0;
+        }
+        // Base case 2: When the start and end indices are the same.
+        if (i == j) {
+            if (isTrue == 1) {
+                return exp.charAt(i) == 'T' ? 1 : 0;
+            } else {
+                return exp.charAt(i) == 'F' ? 1 : 0;
+            }
+        }
+        
+        if (dp[i][j][isTrue] != null) {
+            return dp[i][j][isTrue];
+        }
+
+        long ways = 0;
+        for (int ind = i + 1; ind <= j - 1; ind += 2) {
+            long lT = evaluateExpressionWays(exp, i, ind - 1, 1, dp);
+            long lF = evaluateExpressionWays(exp, i, ind - 1, 0, dp);
+            long rT = evaluateExpressionWays(exp, ind + 1, j, 1, dp);
+            long rF = evaluateExpressionWays(exp, ind + 1, j, 0, dp);
+
+            char operator = exp.charAt(ind);
+            if (operator == '&') {
+                if (isTrue == 1) {
+                    ways = (ways + (lT * rT) % MOD) % MOD;
+                } else {
+                    ways = (ways + (lF * rT) % MOD + (lT * rF) % MOD + (lF * rF) % MOD) % MOD;
+                }
+            } else if (operator == '|') {
+                if (isTrue == 1) {
+                    ways = (ways + (lF * rT) % MOD + (lT * rF) % MOD + (lT * rT) % MOD) % MOD;
+                } else {
+                    ways = (ways + (lF * rF) % MOD) % MOD;
+                }
+            } else {
+                if (isTrue == 1) {
+                    ways = (ways + (lF * rT) % MOD + (lT * rF) % MOD) % MOD;
+                } else {
+                    ways = (ways + (lF * rF) % MOD + (lT * rT) % MOD) % MOD;
+                }
+            }
+        }
+
+        dp[i][j][isTrue] = ways;
+        return ways;
+  }
