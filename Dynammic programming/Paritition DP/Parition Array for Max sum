@@ -1,0 +1,47 @@
+//recursion
+public static int maximumSubarray(int arr[], int k) {
+        // Write your code here..
+        return f(arr,0,k);
+}
+public static int f(int arr[],int ind,int k){
+        int n= arr.length;
+        int max= Integer.MIN_VALUE;
+        int ans= Integer.MIN_VALUE;
+        int len=0;
+        if(ind==n)
+          return 0;
+        for(int j=ind;j<Math.min(ind+k,n);j++){
+           max= Math.max(max,arr[j]);
+           len++;
+           int sum= len*max+f(arr,j+1,k);
+           ans= Math.max(ans,sum);             
+        }
+        return ans;  
+}
+
+//Memoization
+public static int maximumSubarray(int arr[], int k) {
+        // Write your code here..
+        int n= arr.length;
+        int dp[]= new int[n];
+        Arrays.fill(dp,-1);
+        return f(arr,0,k,dp);
+}
+public static int f(int arr[],int ind,int k,int dp[]){
+        int n= arr.length;
+        int max= Integer.MIN_VALUE;
+        int ans= Integer.MIN_VALUE;
+        int len=0;
+        if(ind==n)
+          return 0;
+        if(dp[ind]!=-1) return dp[ind];  
+        for(int j=ind;j<Math.min(ind+k,n);j++){
+           max= Math.max(max,arr[j]);
+           len++;
+           int sum= len*max+f(arr,j+1,k,dp);
+           ans= Math.max(ans,sum);             
+        }
+        return dp[ind]=ans;  
+}
+
+//tabulation
