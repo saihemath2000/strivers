@@ -1,0 +1,13 @@
+public static List<Integer> MinimumCoins(int n) {
+        // Write your code here.
+        int denominations[] = {1,2,5,10,20,50,100,500,1000};
+        int nums =denominations.length-1;
+        List<Integer> ans = new ArrayList<>();
+        for(int i=nums;i>=0;i--){
+           while(n>=denominations[i]){
+               n-=denominations[i];
+               ans.add(denominations[i]);
+           }
+        }
+        return ans;
+}
