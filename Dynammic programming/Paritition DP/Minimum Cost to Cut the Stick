@@ -1,0 +1,26 @@
+//Memoization
+public int minCost(int n, int[] cuts) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int x:cuts)
+          arr.add(x);
+        arr.add(0);
+        arr.add(n);
+        Collections.sort(arr);
+        int dp[][]= new int[cuts.length+1][cuts.length+1];
+        for(int row[]:dp)
+          Arrays.fill(row,-1);
+        return f(arr,1,cuts.length,dp);  
+}
+public static int f(ArrayList<Integer> arr,int i,int j,int dp[][]){
+        if(i>j) return 0;
+        if(dp[i][j]!=-1)
+          return dp[i][j];
+        int min= Integer.MAX_VALUE;
+        for(int ind=i;ind<=j;ind++){
+           int cost= arr.get(j+1)-arr.get(i-1)+f(arr,i,ind-1,dp)+f(arr,ind+1,j,dp);
+           min= Math.min(cost,min);
+        }
+        return dp[i][j]=min;
+}
+
+//Tabulation
