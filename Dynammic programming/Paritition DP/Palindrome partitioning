@@ -1,0 +1,58 @@
+//recursion
+public static int palindromePartitioning(String str) {
+        // Write your code here
+        int n= str.length();
+        return f(str,0,n)-1;
+}
+public static boolean ispalindrome(String str,int start,int end){
+       while(start<=end){
+           if(str.charAt(start)!=str.charAt(end))
+              return false;
+           start++;
+           end--;   
+       }
+       return true; 
+}
+public static int f(String str,int i,int n){
+        int ans= Integer.MAX_VALUE;
+        if(i==n)
+          return 0;
+        for(int j=i;j<n;j++){
+            if(ispalindrome(str,i,j)){
+                int cost= 1+f(str,j+1,n);
+                ans= Math.min(ans,cost);
+            }
+        }
+        return ans;  
+}
+
+//memoization
+public static int palindromePartitioning(String str) {
+        // Write your code here
+        int n= str.length();
+        int dp[]= new int[n];
+        Arrays.fill(dp,-1);
+        return f(str,0,n,dp)-1;
+}
+public static boolean ispalindrome(String str,int start,int end){
+       while(start<=end){
+           if(str.charAt(start)!=str.charAt(end))
+              return false;
+           start++;
+           end--;   
+       }
+       return true; 
+}
+public static int f(String str,int i,int n,int dp[]){
+        int ans= Integer.MAX_VALUE;
+        if(i==n)
+          return 0;
+        if(dp[i]!=-1) return dp[i];  
+        for(int j=i;j<n;j++){
+            if(ispalindrome(str,i,j)){
+                int cost= 1+f(str,j+1,n,dp);
+                ans= Math.min(ans,cost);
+            }
+        }
+        return dp[i]=ans;  
+}
