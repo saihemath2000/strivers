@@ -1,0 +1,39 @@
+//recurison
+public static int minimizeCost(int n, int k, int []height){
+        // Write your code here.
+        return f(n-1,k,height);  
+}
+public static int f(int ind,int k,int height[]){
+        if(ind==0)
+          return 0;
+        int mmSteps = Integer.MAX_VALUE;
+        for(int i=1;i<=k;i++){
+            if(ind-i>=0){
+                int cost=Math.abs(height[ind]-height[ind-i])+f(ind-i,k,height);
+                mmSteps= Math.min(mmSteps,cost);
+            }
+        }
+        return mmSteps;  
+}
+
+//memoization
+public static int minimizeCost(int n, int k, int []height){
+        // Write your code here.
+        int dp[]= new int[n];
+        Arrays.fill(dp,-1);
+        return f(n-1,k,height,dp);  
+}
+public static int f(int ind,int k,int height[],int dp[]){
+        if(ind==0)
+          return 0;
+        if(dp[ind]!=-1)
+          return dp[ind];
+        int mmSteps = Integer.MAX_VALUE;
+        for(int i=1;i<=k;i++){
+            if(ind-i>=0){
+                int cost=Math.abs(height[ind]-height[ind-i])+f(ind-i,k,height,dp);
+                mmSteps= Math.min(mmSteps,cost);
+            }
+        }
+        return dp[ind]=mmSteps;  
+}
