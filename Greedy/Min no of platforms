@@ -1,0 +1,20 @@
+public static int calculateMinPatforms(int at[], int dt[], int n) {
+        // Write your code here.
+        int required=1,ans=1;
+        Arrays.sort(at);
+        Arrays.sort(dt);
+        int j=1,i=0;
+        while(i<n && j<n){
+            if(at[j]>dt[i]){
+                required--;
+                i++;
+            }
+            else{
+                required++;
+                j++;
+            }
+            if(required>ans)
+              ans=required;
+        }
+        return ans;
+}
