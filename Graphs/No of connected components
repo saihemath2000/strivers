@@ -1,0 +1,28 @@
+public static int findNumOfProvinces(int[][] roads, int n) {
+        // Write your code here.
+        boolean visited[]= new boolean[n];
+        int count=0;
+        for(int i=0;i<n;i++){
+            if(visited[i]==false){
+               bfs(roads,i,visited,n);
+               count++;   
+            }
+        }
+        return count;
+    }
+    public static void bfs(int roads[][],int s,boolean visited[],int n){
+        Queue<Integer> q= new ArrayDeque<>();
+        q.add(s);
+        visited[s]=true;
+        while(!q.isEmpty()){
+            int u=q.poll();
+            for(int j=0;j<n;j++){
+                if(roads[u][j]==1){
+                  if(visited[j]==false){
+                      visited[j]=true;
+                      q.add(j);
+                  }
+                }
+            }
+        }
+    }
