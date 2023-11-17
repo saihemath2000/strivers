@@ -1,0 +1,51 @@
+class Node{
+	int x,y,distance;
+	Node(int a,int b,int c){
+		x=a;
+		y=b;
+		distance=c;
+	}
+}
+
+public class Solution {
+	public static ArrayList<ArrayList<Integer>> nearest(ArrayList<ArrayList<Integer>> mat, int n, int m) {
+		// Write your code here.
+		int dist[][]= new int[n][m];
+		int visit[][]= new int[n][m];
+		Queue<Node> q = new ArrayDeque<>();
+		for(int i=0;i<n;i++){
+			for(int j=0;j<m;j++){
+				if(mat.get(i).get(j)==1){
+					visit[i][j]=1;
+                    q.add(new Node(i,j,0)); 
+				}
+			}
+		}
+		int delrow[] = {-1, 0, +1, 0}; 
+	    int delcol[] = {0, +1, 0, -1}; 
+		while(!q.isEmpty()){
+			Node curr=q.poll();
+			int row=curr.x;
+			int col=curr.y;
+			int z= curr.distance;
+			dist[row][col]=z;
+			for(int i=0;i<4;i++){
+				int a=row+delrow[i];
+				int b=col+delcol[i];
+				if(a>=0 && a<n && b>=0 && b<m && visit[a][b]==0){
+					visit[a][b]=1;
+					q.add(new Node(a,b,z+1));
+				}
+			}
+		}
+		ArrayList<ArrayList<Integer>> ans= new ArrayList<>();
+		for(int i=0;i<n;i++){
+			ArrayList<Integer> temp= new ArrayList<>();
+			for(int j=0;j<m;j++){
+                temp.add(dist[i][j]);
+			}
+			ans.add(temp);
+		}
+		return ans;
+	}
+}
