@@ -1,0 +1,28 @@
+boolean detectCycle(int V, List<List<Integer>> adj) {
+            // Write your code here.
+            boolean visited[]= new boolean[V];
+            for(int i=0;i<V;i++){
+                if(visited[i]==false){
+                   if(bfs(i,V,adj,visited,-1))
+                      return true; 
+                }
+            }
+            return false;
+  }
+  static boolean bfs(int s,int V,List<List<Integer>> adj,boolean visited[],int parent){
+            visited[s]=true;
+            Queue<int[]> q= new ArrayDeque<>();
+            q.add(new int[]{s,parent});
+            while(!q.isEmpty()){
+                int point[]= q.poll();
+                for(int v:adj.get(point[0])){
+                    if(visited[v]==false){
+                        visited[v]=true;
+                        q.add(new int[]{v,point[0]});
+                    }
+                    else if(v!=point[1])
+                      return true;
+                }
+            }
+            return false;
+  }
