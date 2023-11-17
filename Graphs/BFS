@@ -1,0 +1,35 @@
+import java.util.*;
+class BFS{
+    public static void addEdge(ArrayList<ArrayList<Integer>> graph,int u,int v){
+        graph.get(u).add(v);
+        graph.get(v).add(u);
+    }
+    public static void main(String [] args){
+        Scanner sc = new Scanner(System.in);
+        int n= sc.nextInt();
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<n;i++)
+          graph.add(new ArrayList<Integer>());
+        int m= sc.nextInt();
+        for(int i=0;i<m;i++){
+            addEdge(graph,sc.nextInt(),sc.nextInt());
+        }
+        boolean visited[]= new boolean[n];
+        bfstraversal(0,n,graph,visited);  
+    }
+    public static void bfstraversal(int s,int n,ArrayList<ArrayList<Integer>> graph,boolean visited[]){
+        Queue<Integer> q = new ArrayDeque<>();
+        visited[s]=true;
+        q.add(s);
+        while(!q.isEmpty()){
+            int u=q.poll();
+            System.out.print(u+" ");
+            for(int v:graph.get(u)){
+                if(visited[v]==false){
+                    visited[v]=true;
+                    q.add(v);
+                }
+            }
+        }
+    }
+}
