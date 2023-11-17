@@ -1,0 +1,23 @@
+public static int[][] floodFill(int[][] image, int n, int m, int x, int y, int p) {
+        // Write your code here.
+        Queue<int[]> q = new ArrayDeque<>();
+        int c= image[x][y];
+        q.add(new int[]{x,y});
+        int dx[] = {0, 0, 1, -1};
+        int dy[] = {1, -1, 0, 0};
+        image[x][y]=p;
+        while(!q.isEmpty()){
+            for(int i=0;i<q.size();i++){
+               int point[]= q.poll();
+               for(int j=0;j<4;j++){
+                  int a=point[0]+dx[j];
+                  int b=point[1]+dy[j];
+                  if(a<0||b<0||a>=n||b>=m||image[a][b]!=c)
+                    continue;
+                  image[a][b]=p;
+                  q.add(new int[]{a,b});  
+               }
+            }
+        }
+        return image;
+    }
