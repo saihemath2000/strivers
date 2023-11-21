@@ -1,0 +1,29 @@
+public static void dfs(int u,boolean visited[],ArrayList<ArrayList<Integer>> adj,ArrayDeque<Integer> st){
+       visited[u]=true;
+       for(int i:adj.get(u)){
+           if(visited[i]==false)
+             dfs(i,visited,adj,st);
+       }
+       st.push(u); 
+    }
+    public static List<Integer> topologicalSort(int[][] edges, int e, int v) {
+        // Write your code here!
+        boolean visited[]= new boolean[v];
+        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+        for(int i=0;i<v;i++)
+           adj.add(new ArrayList<>());
+        for(int i=0;i<edges.length;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+        }
+        ArrayDeque<Integer> st = new ArrayDeque<>();
+        for(int i=0;i<v;i++){
+           if(visited[i]==false){
+               dfs(i,visited,adj,st);
+           }
+        } 
+        List<Integer> ans= new ArrayList<>();
+        while(!st.isEmpty()){
+            ans.add(st.pop());
+        }
+        return ans;
+    }
