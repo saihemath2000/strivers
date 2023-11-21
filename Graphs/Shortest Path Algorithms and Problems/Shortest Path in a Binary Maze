@@ -1,0 +1,42 @@
+class Triplet{
+	int src,des,distance;
+	Triplet(int a,int b,int c){
+		src=a;
+		des=b;
+		distance=c;
+	}
+}
+public class Solution {
+	public static int shortestPathBinaryMatrix(int[][] matrix, Point src, Point dest) {
+		// Write your code here
+		if(matrix[src.x][src.y]==0|| matrix[dest.x][dest.y]==0)
+		  return -1;
+		if(src.x==dest.x && src.y==dest.y)
+		  return 0;  
+		Queue<Triplet> q= new ArrayDeque<>();
+		q.add(new Triplet(src.x,src.y,0));
+		int row[]={-1,1,0,0};
+		int col[]={0,0,1,-1};
+		int n=matrix.length,m=matrix[0].length;
+		int dist[][]= new int[n][m];
+		for(int temp[]:dist)
+		  Arrays.fill(temp,(int)1e9);
+		dist[src.x][src.y]=0;
+		while(!q.isEmpty()){
+			Triplet curr=q.poll();
+			for(int i=0;i<4;i++){
+				int nrow=row[i]+curr.src;
+				int ncol=col[i]+curr.des;
+				if(nrow>=0 && nrow<n && ncol<m && ncol>=0 && matrix[nrow][ncol]==1){
+					if(nrow==dest.x && ncol==dest.y)
+					  return curr.distance+1;
+					if(curr.distance+1<dist[nrow][ncol]){
+						dist[nrow][ncol]=curr.distance;
+						q.add(new Triplet(nrow,ncol,curr.distance+1));
+					}  
+				}
+			}
+		}
+        return -1;    
+	}	
+}
