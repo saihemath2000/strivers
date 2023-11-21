@@ -1,0 +1,43 @@
+class Pair{
+	int node,weight;
+	Pair(int a,int b){
+		node=a;
+		weight=b;
+	}
+}
+public class Solution {
+
+	public static int minimumSpanningTree(ArrayList<ArrayList<Integer>> edges, int n) {
+		//Your code goes here
+		PriorityQueue<Pair> pq= new PriorityQueue<Pair>((x,y)->x.weight-y.weight);
+		pq.add(new Pair(0,0));
+		boolean visited[]= new boolean[n];
+		int sum=0;
+		ArrayList<ArrayList<Pair>> adj= new ArrayList<>();
+		for(int i=0;i<n;i++){
+			adj.add(new ArrayList<Pair>());
+		}
+		for(int i=0;i<edges.size();i++){
+			int u=edges.get(i).get(0);
+			int v=edges.get(i).get(1);
+			int value= edges.get(i).get(2);
+			adj.get(u).add(new Pair(v,value));
+			adj.get(v).add(new Pair(u,value));
+		}
+		while(!pq.isEmpty()){
+			Pair curr=pq.poll();
+			if(visited[curr.node]==true)
+			  continue;
+			visited[curr.node]=true;
+			sum+=curr.weight;
+			for(int i=0;i<adj.get(curr.node).size();i++){
+			   int ed= adj.get(curr.node).get(i).node;
+			   int edw= adj.get(curr.node).get(i).weight;
+			   if(visited[ed]==false)
+			     pq.add(new Pair(ed,edw));	
+			} 
+
+		}
+		return sum;
+	}
+}
