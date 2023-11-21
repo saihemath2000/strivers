@@ -1,0 +1,50 @@
+class Pair{
+    int dst,wt;
+    Pair(int b,int c){
+        dst=b;
+        wt=c;
+    }
+}
+public static int[] shortestPathInDAG(int n, int m, int [][]edges) {
+        // Write your code here
+        ArrayList<ArrayList<Pair>> adj= new ArrayList<>();
+        for(int i=0;i<n;i++)
+          adj.add(new ArrayList<>());
+        boolean visited[]= new boolean[n];
+        ArrayDeque<Integer> st = new ArrayDeque<>();
+        for(int i=0;i<m;i++){
+           adj.get(edges[i][0]).add(new Pair(edges[i][1],edges[i][2])); 
+        }
+        for(int i=0;i<n;i++){
+            if(visited[i]==false){
+                dfs(i,visited,st,adj);
+            }
+        }
+        int ans[]= new int[n];
+        Arrays.fill(ans,(int)(1e9));
+        ans[0]=0;
+        while(!st.isEmpty()){
+            int curr=st.pop();
+            for(int i=0;i<adj.get(curr).size();i++){
+                int v=adj.get(curr).get(i).dst;
+                int wet = adj.get(curr).get(i).wt;
+                if(ans[curr]+wet<ans[v])
+                  ans[v]=ans[curr]+wet;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(ans[i]==(int)(1e9))
+              ans[i]=-1;
+        }
+        return ans;  
+    }
+    private static void dfs(int node,boolean vis[],ArrayDeque<Integer> st,ArrayList<ArrayList<Pair>> adj) {
+    vis[node] = true;
+    for (int i = 0; i < adj.get(node).size(); i++) {
+      int v = adj.get(node).get(i).dst;
+      if (vis[v]==false){
+        dfs(v,vis,st,adj);
+      }
+    }
+    st.push(node);
+  }
