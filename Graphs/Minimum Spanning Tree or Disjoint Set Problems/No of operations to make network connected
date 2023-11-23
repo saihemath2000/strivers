@@ -1,0 +1,54 @@
+class DisjointSet{
+    List<Integer> rank= new ArrayList<>();
+    List<Integer> parent= new ArrayList<>();
+    DisjointSet(int n){
+        for(int i=0;i<=n;i++){
+            rank.add(0);
+            parent.add(i);
+        }
+    }
+    public int findPar(int node){
+      if(node==parent.get(node))
+        return node;
+      int ulp=findPar(parent.get(node));
+      parent.set(node,ulp);
+      return parent.get(node);  
+    }
+    public void unionByRank(int u,int v){
+        int pu= findPar(u);
+        int pv= findPar(v);
+        if(pu==pv) return;
+        if(rank.get(pu)<rank.get(pv))
+           parent.set(pu,pv);
+        else if(rank.get(pu)>rank.get(pv))
+           parent.set(pv,pu);
+        else{
+            parent.set(pv,pu);
+            int rankU=rank.get(pu);
+            rank.set(pu,rankU+1);
+        }      
+    }
+}
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        DisjointSet ds= new DisjointSet(n);
+        int extras=0;
+        for(int i=0;i<connections.length;i++){
+            int u=connections[i][0];
+            int v=connections[i][1];
+            if(ds.findPar(u)==ds.findPar(v))
+               extras++;
+            else
+               ds.unionByRank(u,v);   
+        }
+        int total=0;
+        for(int i=0;i<n;i++){
+            if(ds.parent.get(i)==i)
+              total++;
+        }
+        if(extras>=(total-1))
+          return total-1;
+        else
+          return -1;
+    }
+}
