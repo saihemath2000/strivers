@@ -1,0 +1,33 @@
+public static int minimumTimeTakingPath(int[][] heights){
+        // Write your code here.
+        int m=heights.length;
+        int n=heights[0].length;
+        int row[]={-1,1,0,0};
+        int col[]={0,0,-1,1};
+        PriorityQueue<int[]>pq= new PriorityQueue<>((a,b)->a[2]-b[2]);
+        pq.add(new int[]{0,0,0});
+        int efforts[][]= new int[m][n];
+        for(int curr[]:efforts)
+           Arrays.fill(curr,Integer.MAX_VALUE);
+        efforts[0][0]=0;   
+        while(!pq.isEmpty()){
+            int current[]= pq.poll();
+            int x=current[0];
+            int y=current[1];
+            int effort=current[2];
+            if(x==m-1 && y==n-1)
+               return effort;
+            for(int i=0;i<4;i++){
+                int newx=x+row[i];
+                int newy=y+col[i];
+                if(newx>=0 && newx<m && newy>=0 && newy<n){
+                   int neweffort= Math.max(effort,Math.abs(heights[newx][newy]-heights[x][y]));
+                   if(neweffort<efforts[newx][newy]){
+                       efforts[newx][newy]=neweffort;
+                       pq.add(new int[]{newx,newy,neweffort});
+                   }   
+                }
+            }   
+        }
+        return 1;
+    }
