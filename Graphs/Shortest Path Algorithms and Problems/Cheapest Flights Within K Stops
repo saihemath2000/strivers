@@ -1,0 +1,34 @@
+public static int savingMoney(int n, int source, int destination, int k, List<List<Integer>> trains) {
+        // Write your code here.
+        ArrayList<ArrayList<int[]>> adj = new ArrayList<>(); 
+        for(int i = 0;i<n;i++) {
+            adj.add(new ArrayList<>()); 
+        }
+        int m = trains.size(); 
+        for(int i = 0;i<m;i++) {
+            adj.get(trains.get(i).get(0)).add(new int[]{trains.get(i).get(1),trains.get(i).get(2)}); 
+        }
+        int dist[]= new int[n];
+        Arrays.fill(dist,(int)1e9);
+        dist[source]=0;
+        Queue<int[]> q= new ArrayDeque<>();
+        q.add(new int[]{0,source,0});
+        while(!q.isEmpty()){
+            int current[]=q.poll();
+            int stops=current[0];
+            int node=current[1];
+            int wt= current[2];
+            if(stops>k) continue;
+            for(int curr[]:adj.get(node)){
+                int adjn=curr[0];
+                int wtadjn=curr[1];
+                if(wt+wtadjn<dist[adjn] && stops<=k){
+                    dist[adjn]=wt+wtadjn;
+                    q.add(new int[]{stops+1,adjn,dist[adjn]});
+                }
+            }
+        }
+        if(dist[destination]==(int)1e9)
+          return -1;
+        return dist[destination];  
+    }
