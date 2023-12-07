@@ -1,0 +1,40 @@
+public static int numberOfWays(int n, int m, int[][] edges) {
+    int mod = (int) 1e9 + 7;
+    int[] dist = new int[n];
+    int[] ways = new int[n];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    ways[0] = 1;
+    dist[0] = 0;
+
+    ArrayList<ArrayList<int[]>> adj = new ArrayList<>();
+    for (int i = 0; i < n; i++)
+        adj.add(new ArrayList<>());
+
+    for (int i = 0; i < m; i++) {
+        adj.get(edges[i][0]).add(new int[]{edges[i][1], edges[i][2]});
+        adj.get(edges[i][1]).add(new int[]{edges[i][0], edges[i][2]});
+    }
+
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+    pq.add(new int[]{0, 0});
+
+    while (!pq.isEmpty()) {
+        int current[] = pq.poll();
+        int node = current[0];
+        int distance = current[1];
+
+        for (int curr[] : adj.get(node)) {
+            int adjnode = curr[0];
+            int adjdist = curr[1];
+
+            if (distance + adjdist < dist[adjnode]) {
+                dist[adjnode] = distance + adjdist;
+                ways[adjnode] = ways[node];
+                pq.add(new int[]{adjnode, dist[adjnode]});
+            } else if (distance + adjdist == dist[adjnode]) {
+                ways[adjnode] = (ways[node] + ways[adjnode]) % mod;
+            }
+        }
+    }
+    return ways[n - 1] % mod;
+}
