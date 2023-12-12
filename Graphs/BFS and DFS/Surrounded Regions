@@ -1,0 +1,37 @@
+public static void replaceOWithX(char matrix[][]) {
+        // write your code here
+        int n=matrix.length;
+        int m=matrix[0].length;
+	    boolean visited[][]= new boolean[n][m];
+        for(int j=0;j<m;j++){
+            if(visited[0][j]==false && matrix[0][j]=='O')
+               dfs(0,j,visited,matrix);
+            if(visited[n-1][j]==false && matrix[n-1][j]=='O')
+               dfs(n-1,j,visited,matrix);   
+        }
+        for(int i=0;i<n;i++){
+            if(visited[i][0]==false && matrix[i][0]=='O')
+               dfs(i,0,visited,matrix);
+            if(visited[i][m-1]==false && matrix[i][m-1]=='O')
+               dfs(i,m-1,visited,matrix);
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(visited[i][j]==false && matrix[i][j]=='O')
+                   matrix[i][j]='X';
+            }
+        }
+    }
+    public static void dfs(int i,int j,boolean visited[][],char matrix[][]){
+        int n=matrix.length;
+        int m=matrix[0].length;
+        visited[i][j]=true;
+        int dx[]={0,0,1,-1};
+        int dy[]={1,-1,0,0};
+        for(int k=0;k<4;k++){
+            int x=i+dx[k];
+            int y=j+dy[k];
+            if(x>=0 && x<n && y>=0 && y<m && visited[x][y]==false && matrix[x][y]=='O')
+              dfs(x,y,visited,matrix);
+        }
+    }
