@@ -1,0 +1,29 @@
+public static int wordLadder(String begin, String end, ArrayList < String > dict) {
+      // Write your code here.
+      HashSet<String> h = new HashSet<>();
+      for(int i=0;i<dict.size();i++){
+        h.add(dict.get(i));
+      }
+      Queue<Pair> q = new ArrayDeque<>();
+      q.add(new Pair(begin,1));
+      while(!q.isEmpty()){
+        Pair curr= q.poll();
+        String current= curr.word;
+        int t= curr.steps;
+        if(current.equals(end))
+          return t;
+        for(int i=0;i<current.length();i++){
+          for(char c='a';c<='z';c++){
+            char replacedCharArray[] = current.toCharArray();
+            replacedCharArray[i] = c;
+            String replacedWord = new String(replacedCharArray);
+            // check if it exists in the set and push it in the queue.
+            if(h.contains(replacedWord)==true){
+              h.remove(replacedWord);
+              q.add(new Pair(replacedWord,t+1));
+            }
+          }
+        }
+      }
+      return -1;
+  }
