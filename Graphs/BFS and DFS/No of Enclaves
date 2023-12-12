@@ -1,0 +1,63 @@
+import java.util.*;
+
+public class Solution {
+    static class Pair{
+        int first;
+        int second;
+        Pair(int first,int second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+    public static int matrixTraps(int n,int m, int [][]grid) {
+         // Create a queue to perform breadth-first search.
+        Queue<Pair> q = new LinkedList<>();
+
+        // Create a visited array to keep track of visited cells.
+        int vis[][] = new int[n][m];
+
+        // Iterate through the boundary cells.
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // Check if the current cell is on the boundary and contains a 1.
+                if (i == 0 || j == 0 || i == n - 1 || j == m - 1) {
+                    if (grid[i][j] == 0) {
+                        // Add the boundary cell to the queue and mark it as visited.
+                        q.add(new Pair(i, j));
+                        vis[i][j] = 1;
+                    }
+                }
+            }
+        }
+        int rowarr[] = {-1, 0, +1, 0};
+        int colarr[] = {0, +1, 0, -1};
+        // Perform breadth-first search starting from boundary cells.
+
+        while (!q.isEmpty()) {
+            int r = q.peek().first;
+            int c = q.peek().second;
+            q.remove();
+            for (int i = 0; i < 4; i++) {
+                int newr = r + rowarr[i];
+                int newc = c + colarr[i];
+
+                if (newr >= 0 && newr < n && newc >= 0 && newc < m && grid[newr][newc] == 0 && vis[newr][newc] ==0) {
+                    // Add the neighboring cell to the queue and mark it as visited.
+                    q.add(new Pair(newr, newc));
+                    vis[newr][newc] = 1;
+                }
+            }
+        }
+ 
+        // Count the number of enclaves by checking unvisited 1 cells.
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 0 && vis[i][j] == 0) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+}
