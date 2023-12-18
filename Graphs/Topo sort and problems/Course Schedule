@@ -1,0 +1,32 @@
+public static List<Integer> findSchedule(int numCourses, List<List<Integer>> prerequisites) {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+        ArrayList<Integer> ans= new ArrayList<>();
+        for(int i=0;i<=numCourses;i++)
+           adj.add(new ArrayList<>());
+        for(int i=0;i<prerequisites.size();i++)
+           adj.get(prerequisites.get(i).get(1)).add(prerequisites.get(i).get(0)); 
+        int indegree[]= new int[numCourses+1];
+        for(int i=1;i<=numCourses;i++){
+            for(int it:adj.get(i)){
+                indegree[it]++;
+            }
+        }
+        Queue<Integer> q= new ArrayDeque<>();
+        for(int i=1;i<=numCourses;i++){
+            if(indegree[i]==0)
+                q.add(i);
+        }
+        while(!q.isEmpty()){
+            int curr=q.poll();
+            ans.add(curr);
+            for(int it:adj.get(curr)){
+                indegree[it]--;
+                if(indegree[it]==0)
+                  q.add(it);
+            }
+        }
+        if(ans.size()==numCourses)
+            return ans;
+        return new ArrayList<>();
+    }
