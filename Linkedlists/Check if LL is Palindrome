@@ -1,0 +1,29 @@
+public static boolean isPalindrome(Node head) {
+        // write your code here
+        if(head==null || head.next==null)
+          return false;
+        Node slow=head,fast=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        slow.next=reverse(slow.next);
+        slow=slow.next;
+        Node temp=head;
+        while(slow!=null){
+            if(slow.data!=temp.data) return false;
+            slow=slow.next;
+            temp=temp.next;
+        }
+        return true;  
+    }
+    public static Node reverse(Node ptr){
+       Node curr=ptr,prev=null;
+       while(curr!=null){
+           Node temp1= curr.next;
+           curr.next=prev;
+           prev=curr;
+           curr=temp1;
+       }
+       return prev; 
+    }
