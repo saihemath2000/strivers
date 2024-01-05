@@ -1,0 +1,15 @@
+public static Node removeKthNode(Node head, int K)
+    {
+        // Write your code here.
+        if(head==null || head.next==null) return null;
+        Node first=head,sec=head;
+        for(int i=1;i<=K;i++)
+           sec=sec.next;
+        if(sec==null) return head.next;   
+        while(sec.next!=null){
+            first=first.next;
+            sec=sec.next;
+        }
+        first.next=first.next.next;
+        return head;
+  }
