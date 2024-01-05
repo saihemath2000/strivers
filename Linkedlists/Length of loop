@@ -1,0 +1,19 @@
+public static int lengthOfLoop(Node head) {
+        // Write your code here
+        if(head==null) return 0;
+        Node slow=head,fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast){
+                fast=fast.next;
+                int ans=1;
+                while(slow!=fast){
+                    fast=fast.next;
+                    ans++;
+                }
+                return ans;
+            }
+        }
+        return 0;  
+}
