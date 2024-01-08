@@ -1,0 +1,20 @@
+public static Node addOne(Node head) {
+		// Write your code here.
+		int temp=help(head);
+		if(temp==1){
+			Node first= new Node(1);
+			first.next=head;
+			return first;
+		}
+		return head;
+	}
+	public static int help(Node head){
+		if(head==null)
+		  return 1;
+		int carry=help(head.next);
+		head.data=head.data+carry;
+		if(head.data<10)
+		  return 0;
+		head.data=0;
+		return 1;    
+	}
