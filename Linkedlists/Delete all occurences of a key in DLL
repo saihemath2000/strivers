@@ -1,0 +1,20 @@
+public static Node deleteAllOccurrences(Node head, int k) {
+        // Write your code here.
+        Node temp=head;
+        while(temp!=null){
+            if(temp.data==k){
+                if(temp==head)
+                  head=temp.next;
+                Node prevnode= temp.prev;
+                Node nextnode= temp.next;
+                if(nextnode!=null)
+                   nextnode.prev=prevnode;
+                if(prevnode!=null)
+                   prevnode.next=nextnode;
+                temp=nextnode;        
+            }
+            else
+              temp=temp.next;
+        }
+        return head;
+}
