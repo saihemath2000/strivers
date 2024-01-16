@@ -1,0 +1,25 @@
+public static Node cloneLL(Node head) {
+        // Write your code here.
+        Node temp=head,newhead=null;
+        while(temp!=null){
+            Node newnode= new Node(temp.data);
+            if(newhead==null)
+               newhead=newnode;
+            newnode.next=temp.next;
+            temp.next=newnode;
+            temp=newnode.next;
+        }
+        temp=head;
+        while(temp!=null){
+            temp.next.random= temp.random!=null?temp.random.next:temp.random;
+            temp=temp.next.next;
+        }
+        temp=head;
+        while(temp!=null){
+            Node copynode= temp.next;
+            temp.next=temp.next.next;
+            copynode.next=copynode.next!=null?copynode.next.next:copynode.next;
+            temp=temp.next;
+        }
+        return newhead;
+    }
