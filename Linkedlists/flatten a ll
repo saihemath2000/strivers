@@ -1,0 +1,30 @@
+public static Node flattenLinkedList(Node root) {
+        //Write your code here
+        if(root==null||root.next==null)
+          return root;
+        root.next= flattenLinkedList(root.next);
+        root=merge(root,root.next);
+        return root;   
+    }
+    public static Node merge(Node head1,Node head2){
+       Node temp= new Node(0);
+       Node res=temp;
+       head1.next=null;
+       head2.next=null;
+       while(head1!=null && head2!=null){
+           if(head1.data<head2.data){
+               temp.child=head1;
+               temp=temp.child;
+               head1=head1.child;
+           }
+           else{
+               temp.child=head2;
+               temp=temp.child;
+               head2=head2.child;
+           }
+       }
+       if(head1!=null)
+         temp.child=head1;
+       else temp.child=head2;
+       return res.child;      
+    }
