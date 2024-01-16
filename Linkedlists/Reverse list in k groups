@@ -1,0 +1,30 @@
+public static Node kReverse(Node head, int k) {
+        // Write your code here.
+        if(head==null) return null;
+        if(isitfine(head,k)){
+            Node prev=null,curr=head,nextnode=null;
+            int cnt=0;
+            while(curr!=null && cnt<k){
+                nextnode=curr.next;
+                curr.next=prev;
+                prev=curr;
+                curr=nextnode;
+                cnt++;
+            }
+            if(nextnode!=null)
+               head.next=kReverse(nextnode,k);
+            return prev;   
+        }
+        return head;
+    }
+    public static boolean isitfine(Node head,int k){
+        Node temp=head;
+        int cnt=0;
+        while(temp!=null && cnt<k){
+            temp=temp.next;
+            cnt++;
+        }
+        if(cnt==k)
+          return true;
+        return false;  
+    }
