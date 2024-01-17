@@ -1,0 +1,43 @@
+static class Stack {
+        static int arr[];
+        static int top;
+        Stack(int capacity) {
+            // Write your code here.
+            arr= new int[capacity];
+            top=-1;
+        }
+        public void push(int num) {
+            // Write your code here.
+            if(top+1<arr.length)
+               arr[++top]=num;
+        }
+        public int pop() {
+            // Write your code here.
+            if(top!=-1){
+               int x=arr[top];
+               top--;
+               return x;
+            }
+            return -1;
+        }
+        public int top() {
+            // Write your code here.
+            if(top!=-1 && top<arr.length)
+            return arr[top];
+            return -1;
+        }
+        public int isEmpty() {
+            // Write your code here.
+            if(top==-1)
+              return 1;
+            else
+              return 0;  
+        }
+        public int isFull() {
+            // Write your code here.
+            if(top+1==arr.length)
+              return 1;
+            else
+              return 0;  
+        }
+    }
