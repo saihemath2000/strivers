@@ -1,0 +1,55 @@
+static class Pair{
+        int value,minele;
+        Pair(int data,int k){
+            value=data;
+            minele=k;  
+        }
+    }
+    static class MinStack {
+        ArrayDeque<Pair> s;
+        // Constructor
+        MinStack() {
+            // Write your code here.
+            s= new ArrayDeque<>();
+        }
+
+        // Function to add another element equal to num at the top of stack.
+        void push(int num) {
+            // Write your code here.
+            int a=0;
+            if(s.isEmpty()){
+                a=num;
+            }
+            else{
+                Pair curr= s.peek();
+                a= Math.min(num,curr.minele);
+            }
+            s.push(new Pair(num,a));
+        }
+
+        // Function to remove the top element of the stack.
+        int pop() {
+            // Write your code here.
+            if(s.isEmpty()) return -1;
+            Pair curr= s.pop();
+            return curr.value;
+        }
+
+        // Function to return the top element of stack if it is present. Otherwise
+        // return -1.
+        int top() {
+            // Write your code here.
+           if(s.isEmpty()) return -1;
+           Pair curr= s.peek();
+           return curr.value; 
+        }
+
+        // Function to return minimum element of stack if it is present. Otherwise
+        // return -1.
+        int getMin() {
+            // Write your code here.
+            if(s.isEmpty()) return -1;
+           Pair curr= s.peek();
+           return curr.minele;
+        }
+    }
