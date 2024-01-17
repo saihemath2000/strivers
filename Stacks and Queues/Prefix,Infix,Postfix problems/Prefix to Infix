@@ -1,0 +1,16 @@
+public static String prefixToInfixConversion(String exp) {
+        // Write your code here
+        ArrayDeque<String> s= new ArrayDeque<>();
+        for(int i=exp.length()-1;i>=0;i--){
+            char c= exp.charAt(i);
+            if(c>='a' && c<='z')
+              s.push(c+"");
+            else{
+                String s1=s.pop();
+                String s2=s.pop();
+                String temp= '('+s1+c+s2+')';
+                s.push(temp);
+            }  
+        }
+        return s.pop();
+}
