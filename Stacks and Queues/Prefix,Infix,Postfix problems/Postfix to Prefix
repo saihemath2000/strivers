@@ -1,0 +1,17 @@
+public static String postfixToPrefix(String exp) {
+        // Write your code here
+       Stack<String> stack = new Stack<>();
+       String result = "";
+       for (int i=0;i<exp.length();i++){
+           char c = exp.charAt(i);
+           if (Character.isLowerCase(c)){
+               stack.push(String.valueOf(c));
+           } else {
+               String str1 = stack.pop();
+               String str2 = stack.pop();
+               result = c+str2+str1;
+               stack.push(result);
+           }
+       }
+       return result;
+    }
