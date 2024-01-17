@@ -1,0 +1,57 @@
+static class Stack {
+        //Write your code here
+        int count=0;
+        Node head=null; 
+        Stack()
+        {
+            //Write your code here
+            head= new Node(0);
+        }
+
+        int getSize()
+        {
+            //Write your code here
+            return count;
+
+        }
+
+        boolean isEmpty()
+        {
+            //Write your code here
+            return count==0;
+        }
+
+        void push(int data)
+        {
+            //Write your code here
+            Node newnode= new Node(data);
+            if(count==0){
+                head=newnode;
+            }
+            else{
+               newnode.next=head;
+               head=newnode;
+            }
+            count++;
+        }
+
+        void pop()
+        {
+            //Write your code here
+            if(count>0){
+                Node nextnode= head.next;
+                head.next=null;
+                head=nextnode;
+                count--;     
+            }
+        }
+
+        int getTop()
+        {
+            //Write your code here
+            if(count>0)
+              return head.data;
+            else 
+               return -1;  
+        }
+    }
