@@ -1,0 +1,32 @@
+public static List< Integer > collidingAsteroids(int []asteroids) {
+        //    Write your code here.
+        ArrayDeque<Integer> s= new ArrayDeque<>();
+        int n= asteroids.length;
+        if(asteroids[0]==0)
+          s.push(asteroids[0]);
+        for(int i=0;i<n;i++){
+            int temp=asteroids[i];
+            while(!s.isEmpty() && temp<0 && s.peek()>0){
+                int sum=temp+s.peek();
+                if(sum<0)
+                  s.pop();
+                else if(sum>0)
+                  temp=0;
+                else{
+                    s.pop();
+                    temp=0;
+                } 
+            }
+            if(temp!=0) s.push(temp);
+        }
+        int len=s.size();
+        int arr[]= new int[len];
+        int i=len-1;
+        while(!s.isEmpty()){
+            arr[i]=s.pop();
+            i=i-1;
+        }
+        ArrayList<Integer> ans= new ArrayList<>();
+        for(i=0;i<len;i++) ans.add(arr[i]);
+        return ans;  
+}
