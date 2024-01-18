@@ -1,0 +1,72 @@
+public static int rangeSum(int []nums){
+        // Write your code here.
+        return (int)(maxs(nums)-mins(nums));
+    }
+    public static long mins(int arr[]){
+        long totalsum=0;
+        int NSL[]= getNSL(arr);
+        int NSR[]= getNSR(arr);
+        for(int i=0;i<arr.length;i++){
+            int l=i-NSL[i];
+            int r=NSR[i]-i;
+            long sum= (long)arr[i]*l*r;
+            totalsum+=sum;
+        }
+        return totalsum;
+    }
+    public static long maxs(int arr[]){
+        long totalsum=0;
+        int NGL[]= getNGL(arr);
+        int NGR[]= getNGR(arr);
+        for(int i=0;i<arr.length;i++){
+            int l=i-NGL[i];
+            int r=NGR[i]-i;
+            long sum=(long)arr[i]*l*r;
+            totalsum+=sum;
+        }
+        return totalsum;
+    }
+    public static int[] getNGL(int arr[]){
+        Stack<Integer> s= new Stack<>();
+        int ans[]= new int[arr.length];
+        for(int i=0;i<arr.length;i++){
+            while(!s.isEmpty() && arr[i]>arr[s.peek()])
+              s.pop();
+            ans[i]= s.isEmpty()?-1:s.peek();
+            s.push(i);  
+        }
+        return ans;
+    }
+    public static int[] getNGR(int arr[]){
+        Stack<Integer> s= new Stack<>();
+        int ans[]= new int[arr.length];
+        for(int i=arr.length-1;i>=0;i--){
+            while(!s.isEmpty() && arr[i]>=arr[s.peek()])
+              s.pop();
+            ans[i]= s.isEmpty()?arr.length:s.peek();
+            s.push(i);  
+        }
+        return ans;
+    }
+    public static int[] getNSL(int arr[]){
+        Stack<Integer> s= new Stack<>();
+        int ans[]= new int[arr.length];
+        for(int i=0;i<arr.length;i++){
+            while(!s.isEmpty() && arr[i]<arr[s.peek()])
+              s.pop();
+            ans[i]= s.isEmpty()?-1:s.peek();
+            s.push(i);  
+        }
+        return ans;
+    }
+    public static int[] getNSR(int arr[]){
+        Stack<Integer> s= new Stack<>();
+        int ans[]= new int[arr.length];
+        for(int i=arr.length-1;i>=0;i--){
+            while(!s.isEmpty() && arr[i]<=arr[s.peek()])
+              s.pop();
+            ans[i]= s.isEmpty()?arr.length:s.peek();
+            s.push(i);  
+        }
+        return ans;
+    }
