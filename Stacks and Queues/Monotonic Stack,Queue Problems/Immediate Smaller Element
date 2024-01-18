@@ -1,0 +1,16 @@
+public static void immediateSmaller(int []a) {
+        // Write your code here.
+       int n=a.length; 
+       ArrayDeque<Integer> s= new ArrayDeque<>();
+       for(int i=n-1;i>=0;i--){
+          int ans=a[i]; 
+          if(!s.isEmpty() && s.peek()<=a[i]){
+              a[i]=s.peek();
+              s.pop();
+          }
+          else{
+             a[i]=-1; 
+          }
+          s.push(ans);    
+       }
+}
