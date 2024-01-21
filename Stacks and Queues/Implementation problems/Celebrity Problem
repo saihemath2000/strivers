@@ -1,0 +1,30 @@
+public static int findCelebrity(int n) {
+        // Write your code here.
+		Stack<Integer> s= new Stack<>();
+		for(int i=0;i<n;i++) s.push(i);
+		while(s.size()>1){
+			int a=s.pop();
+			int b=s.pop();
+			if(Runner.knows(a,b))
+			   s.push(b);
+			else
+			   s.push(a);   
+		}
+		int ans=s.pop();
+		int case1=0,case2=0;
+		for(int i=0;i<n;i++){
+			if(!Runner.knows(ans,i))
+			  case1++;
+		}
+
+		if(case1!=n)
+		  return -1;
+		for(int i=0;i<n;i++){
+			if(Runner.knows(i,ans))
+			  case2++;
+		}
+		if(case2!=n-1)
+		  return -1;  
+        return ans;
+    }
+}
