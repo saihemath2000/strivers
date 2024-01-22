@@ -1,0 +1,4 @@
+reverse(infix string)
+convert to postfix
+reverse(obtained post str)
+return
