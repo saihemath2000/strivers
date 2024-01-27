@@ -1,0 +1,12 @@
+public static int solve(int arr[],int k){
+       int l=0,sum=0,ans=0;
+       for(int r=0;r<arr.length;r++){
+           sum+=arr[r];
+           while(sum>k && l<=r){
+             sum-=arr[l];
+             l++;   
+           }
+           ans+=(r-l+1); 
+       }
+       return ans; 
+}
