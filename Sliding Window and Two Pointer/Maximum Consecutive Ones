@@ -1,0 +1,14 @@
+public static int longestSubSeg(ArrayList<Integer> arr , int n, int k) {
+		// Write your code here.
+		int l=0,r=0,ans=0,count=0;
+		while(r<n){
+			if(arr.get(r)==0) count++;
+			while(count>k){
+				if(arr.get(l)==0) count--;
+				l++;
+			}
+			ans= Math.max(ans,r-l+1);
+			r++;
+		}
+		return ans;
+	}
