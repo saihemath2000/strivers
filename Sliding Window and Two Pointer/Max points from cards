@@ -1,0 +1,14 @@
+public static int maxPoints(int []arr , int K){
+        // Write your code here.
+        int curr=0,minsum=0,total=0,n=arr.length;
+        for(int i=0;i<n;i++){
+            total+=arr[i];
+            curr+=arr[i];
+            if(i<n-K) minsum+=arr[i];
+            else{
+                curr-=arr[i-(n-K)];
+                minsum=Math.min(minsum,curr);
+            }
+        }
+        return total-minsum;
+}
