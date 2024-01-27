@@ -1,0 +1,20 @@
+public static int uniqueSubstrings(String input) 
+    {
+		//write your code here
+		int l=0,ans=Integer.MIN_VALUE;
+		int n=input.length();
+		if(n==0) return 0;
+		HashSet<Character> h = new HashSet<>();
+		for(int r=0;r<n;r++){
+			char c = input.charAt(r);
+			if(h.contains(c)){
+              while(l<r && h.contains(c)){
+				  h.remove(input.charAt(l));
+				  l++;
+			  }    
+			}
+			h.add(c);
+			ans= Math.max(ans,r-l+1);
+		}
+		return ans;
+}
