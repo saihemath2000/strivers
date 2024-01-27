@@ -1,0 +1,17 @@
+public static int findMaxFruits(int []arr, int n) {
+        // Write your code here.
+        HashMap<Integer,Integer> h = new HashMap<>();
+        int l=0,r=0,ans=0;
+        while(r<n){
+            h.put(arr[r],h.getOrDefault(arr[r],0)+1);
+            while(h.size()>2){
+                h.put(arr[l],h.get(arr[l])-1);
+                if(h.get(arr[l])==0)
+                   h.remove(arr[l]);
+                l++;
+            }  
+            ans=Math.max(ans,r-l+1);
+            r++;
+        }
+        return ans;
+}
