@@ -1,0 +1,16 @@
+public static int longestRepeatingSubstring(String str, int k) {
+        // Write your code here.
+        int l=0,ans=0,mostcount=0;
+        int alpha[]= new int[26];
+        for(int r=0;r<str.length();r++){
+            alpha[str.charAt(r)-'A']++;
+            mostcount= Math.max(mostcount,alpha[str.charAt(r)-'A']);
+            int letterstochange = (r-l+1)-mostcount;
+            if(letterstochange>k){
+                alpha[str.charAt(l)-'A']--;
+                l++;
+            }
+            ans=Math.max(ans,r-l+1);
+        }
+        return ans;
+}
