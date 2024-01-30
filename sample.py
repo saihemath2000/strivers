@@ -1,1 +1,1 @@
-print("systrk he")
+print("systrk ")
