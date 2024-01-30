@@ -1,1 +1,1 @@
-print("system work he")
+print("systrk he")
