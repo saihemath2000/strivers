@@ -1,1 +1,1 @@
-print("system work dhdhdhingddddddehehhehe")
+print("system work he")
