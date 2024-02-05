@@ -1,0 +1,39 @@
+//without recursion
+
+public static double myPow(double x, int n) {
+        // Write Your Code Here
+        double ans=1;
+        int temp=n;
+        if(temp<0) temp=-1*temp;
+        while(temp>0){
+            if(temp%2==1){
+                ans*=x;
+                temp-=1;
+            }else{
+                x*=x;
+                temp=temp/2;
+            }
+        }
+        if(n<0)
+           ans=(double)(1.0)/(double)(ans);
+        return ans;
+}
+
+//recursion
+public static double myPow(double x, int n) {
+        // Write Your Code Here
+        double ans=1;
+        int temp=n;
+        if(temp<0) temp=-1*temp;
+       double solution = solve(x,temp,ans);
+       if(n<0)
+          solution= (double)(1.0)/(double)(solution);
+       return solution;    
+}
+public static double solve(double x,int temp,double ans){
+        if(temp==0) return 1;
+        if(temp%2==1)
+          return x*solve(x,temp-1,x*ans);
+        else
+          return solve(x*x,temp/2,ans);  
+}
