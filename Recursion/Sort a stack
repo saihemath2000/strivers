@@ -1,0 +1,17 @@
+public static Stack<Integer> sortStack(Stack<Integer> s) {
+		//Write your code here
+		if(s.isEmpty()) return s;
+		int curr=s.pop();
+		sortStack(s);
+		insert(s,curr);
+		return s;
+	}
+	public static void insert(Stack<Integer> s,int curr){
+		if(s.isEmpty() || s.peek()<=curr){
+			s.push(curr);
+			return;
+		}
+		int e=s.pop();
+		insert(s,curr);
+        s.push(e);
+	}
