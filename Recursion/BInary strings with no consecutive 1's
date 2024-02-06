@@ -1,0 +1,15 @@
+public static List< String > generateString(int N) {
+        // Write your code here.
+        ArrayList<String> ans = new ArrayList<>();
+        generate(ans,N,""); 
+        return ans;
+}
+private static void generate(ArrayList<String> ans,int N,String temp){
+        if(temp.length()==N){
+          ans.add(temp);
+          return;    
+        }
+        generate(ans,N,temp+"0");
+        if(temp.isEmpty()||temp.charAt(temp.length()-1)!='1')
+          generate(ans,N,temp+"1");
+}
