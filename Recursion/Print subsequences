@@ -1,0 +1,14 @@
+public static List<String> generateSubsequences(String s) {
+        // Write your code here
+        List<String> ans = new ArrayList<>();
+        generate(ans,s,"");
+        return ans;
+    }
+    private static void generate(List<String> ans,String s,String temp){
+        if(s.length()==0){
+            ans.add(temp);
+            return;
+        }
+        generate(ans,s.substring(1),temp+s.charAt(0));
+        generate(ans,s.substring(1),temp);
+    }
