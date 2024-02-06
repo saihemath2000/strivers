@@ -1,0 +1,20 @@
+public static ArrayList<String> validParenthesis(int n){
+        // Write your code here.
+        ArrayList<String> ans = new ArrayList<>();
+        generate(ans,n,n,"");
+        return ans;
+    } 
+    public static void generate(ArrayList<String> ans,int left,int right,String temp){
+        if(left==0 && right==0){
+            ans.add(temp);
+            return;
+        }
+        if(left>right || left<0 || right<0)
+          return;
+        temp+="(";
+        generate(ans,left-1,right,temp);
+        temp= temp.substring(0,temp.length()-1);
+        temp+=")";
+        generate(ans,left,right-1,temp);
+        temp= temp.substring(0,temp.length()-1);  
+    }
