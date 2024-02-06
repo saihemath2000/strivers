@@ -1,0 +1,7 @@
+public static void recursivefunction(Stack<Integer> stack){
+		if(stack.isEmpty())
+		  return;
+		int temp = stack.pop();
+		recursivefunction(stack);
+		stack.push(temp);
+}
