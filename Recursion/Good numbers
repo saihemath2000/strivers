@@ -1,0 +1,21 @@
+static boolean isGood(int n, int digit, int sum){
+        if(n == 0) return true;
+        int last = n % 10;
+        if((last > sum) && last != digit){
+            sum += last;
+            return isGood(n/10, digit, sum);
+        }
+        else{
+            return false;
+        }
+    }
+    public static List< Integer > goodNumbers(int a, int b, int digit) 
+        // Write your code here.
+        List<Integer> ans = new ArrayList<>();
+        for(int i=a; i<=b; i++){
+          if(i % 10 == digit) continue;
+          if(isGood(i/10, digit, i%10))
+            ans.add(i);
+    }
+    return ans;
+    }
