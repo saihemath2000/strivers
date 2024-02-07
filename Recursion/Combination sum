@@ -1,0 +1,20 @@
+public static List< List < Integer > > combSum(int []ARR, int B) {
+        // Write your code here.
+        Arrays.sort(ARR);
+        List<List<Integer>> ans= new ArrayList<>();
+        solve(ARR,B,0,ans,new ArrayList<>());
+        return ans;
+}
+public static void solve(int a[],int sum,int ind,List<List<Integer>> ans,List<Integer> temp){
+       if(ind==a.length){
+           if(sum==0)
+             ans.add(new ArrayList<>(temp));
+           return;  
+       }
+       if(a[ind]<=sum){
+           temp.add(a[ind]);
+           solve(a,sum-a[ind],ind,ans,temp);
+           temp.remove(temp.size()-1);
+       }
+       solve(a,sum,ind+1,ans,temp); 
+}
