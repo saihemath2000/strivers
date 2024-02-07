@@ -1,0 +1,25 @@
+public static ArrayList<ArrayList<Integer>> combinationSum2(ArrayList<Integer> arr, int n, int target)
+    {
+        //    Write your code here.
+        Collections.sort(arr);
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        helper(arr, target, 0, new ArrayList<>(), ans);
+        return ans;
+    }
+    public static void helper(ArrayList<Integer> arr, int target, int count, ArrayList<Integer> current, ArrayList<ArrayList<Integer>> ans){
+        if(target == 0){
+            ans.add(new ArrayList<>(current));
+            return;
+        }
+        for(int i = count; i < arr.size(); i++){
+            if(i > count && arr.get(i) == arr.get(i-1)){
+                continue;
+            }
+            if(arr.get(i) > target){
+                break;
+            }
+            current.add(arr.get(i));
+            helper(arr,target-arr.get(i),i+1,current,ans);
+            current.remove(current.size() - 1);
+        }
+    }
