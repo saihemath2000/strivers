@@ -1,0 +1,15 @@
+public static ArrayList<Integer> subsetSum(int num[]) {
+        // Write your code here..
+        ArrayList<Integer> ans= new ArrayList<>();
+        solve(num,0,0,ans);
+        Collections.sort(ans);
+        return ans;
+    }
+    static void solve(int num[],int sum,int ind,ArrayList<Integer> ans){
+        if(ind==num.length){
+            ans.add(sum);
+            return;
+        }
+        solve(num,sum+num[ind],ind+1,ans);
+        solve(num,sum,ind+1,ans);
+    }
