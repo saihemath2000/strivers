@@ -1,0 +1,16 @@
+public static boolean isSubsetPresent(int n, int k,int []a) {
+        // Write your code here
+        return solve(a,0,0,k);
+    }
+    public static boolean solve(int a[],int sum,int ind,int k){
+        if(ind==a.length){
+            if(sum==k) return true;
+            return false;
+        }
+        if(sum>k) return false;
+        sum+=a[ind];
+        if(solve(a,sum,ind+1,k)) return true;
+        sum-=a[ind];
+        if(solve(a,sum,ind+1,k)) return true;
+        return false;
+    }
