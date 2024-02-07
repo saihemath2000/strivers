@@ -1,0 +1,23 @@
+//sliding window approach
+public static List< List < Integer > > subarraysWithSumK(int []a, long k) {
+        // Write your code here
+        int i=0,j=0,n=a.length;
+        long sum=0;
+        List<List<Integer>> ans= new ArrayList<>();
+        List<Integer> temp=new ArrayList<>();
+        while(j<n){
+            sum+=a[j];
+            while(sum>k){
+                sum-=a[i++];
+            }
+            if(sum==k){
+                for(int x=i;x<=j;x++) temp.add(a[x]);
+                ans.add(temp);
+                temp=new ArrayList<>();
+            }
+            j++;  
+        }
+        return ans;
+}
+
+//recursive solution
