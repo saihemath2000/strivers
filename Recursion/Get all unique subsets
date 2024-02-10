@@ -1,0 +1,25 @@
+public static void printSubsets(int input[]) {
+		// Write your code here
+		Arrays.sort(input);
+		ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+		fetch(input,0,result,new ArrayList<>());
+		for(ArrayList<Integer> al: result){
+			for(int i=0;i<al.size();i++){
+				System.out.print(al.get(i)+" ");
+			}
+			System.out.println();
+		}
+	}
+
+	public static void fetch(int[] input, int index, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> ds){
+		result.add(new ArrayList<Integer>(ds));
+		for(int i = index;i < input.length;i++){
+			if(i!=index && input[i] == input[i-1]){
+				continue;
+			}
+			ds.add(input[i]);
+			fetch(input,i+1,result,ds);
+			ds.remove(ds.size()-1);
+		}
+		
+	}
