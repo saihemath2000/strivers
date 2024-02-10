@@ -1,0 +1,16 @@
+static ArrayList<ArrayList<Integer>> combinationSum3(int k, int n) {
+        // Write your code here.
+         ArrayList<ArrayList<Integer>> ans= new ArrayList<>();
+         solve(1,ans,k,n,new ArrayList<>());
+         return ans;
+    }
+    static void solve(int ind,ArrayList<ArrayList<Integer>> ans,int k,int sum,ArrayList<Integer> temp){
+       if(sum==0 && temp.size()==k)
+         ans.add(new ArrayList<>(temp));
+       for(int i=ind;i<10;i++){
+           if(i>sum) break;
+           temp.add(i);
+           solve(i+1,ans,k,sum-i,temp);
+           temp.remove(temp.size()-1);
+       }          
+    }
