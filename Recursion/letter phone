@@ -1,0 +1,35 @@
+public static List<String> letterCombinations(String a) {
+        // Write your code here.
+        HashMap<Character,String> h= new HashMap<>();
+  List<String> ans= new ArrayList<>();
+        if(a==null||a.length()==0)
+          return ans;
+        h.put('0',"0");  
+        h.put('1',"1");
+        h.put('2',"abc");
+        h.put('3',"def");
+        h.put('4',"ghi");
+        h.put('5',"jkl");
+        h.put('6',"mno");
+        h.put('7',"pqrs");
+        h.put('8',"tuv");
+        h.put('9',"wxyz");
+        solve(h,ans,a,0,new StringBuilder());
+        return ans;
+    }
+    private static  void solve(HashMap<Character,String> h,List<String> ans,String digits,int ind,StringBuilder temp){
+      if(ind==digits.length()){
+          ans.add(temp.toString());
+          return;
+      }
+      char currentdigit= digits.charAt(ind);
+      String letter= h.get(currentdigit);
+      if(letter!=null){
+          for(int i=0;i<letter.length();i++){
+              char currlet = letter.charAt(i);
+              temp.append(currlet);
+              solve(h,ans,digits,ind+1,temp);
+              temp.deleteCharAt(temp.length()-1);
+          }
+      }  
+    }
