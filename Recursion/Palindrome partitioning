@@ -1,0 +1,25 @@
+ private static List<List<String>> ans= new ArrayList<>();
+    public static List<List<String>> partition(String str) {
+        // Write your code here.
+        solve(str,0,new ArrayList<String>());
+        return ans;
+    }
+    private static void solve(String str,int ind,List<String> temp){
+        if(ind==str.length()){
+            ans.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int i=ind;i<str.length();i++){
+            if(palindrome(str,ind,i)){
+                temp.add(str.substring(ind,i+1));
+                solve(str,i+1,temp);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+    private static boolean palindrome(String str,int s,int e){
+        while(s<=e){
+            if(str.charAt(s++)!=str.charAt(e--)) return false;
+        }
+        return true;
+    }
