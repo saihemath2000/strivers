@@ -1,0 +1,26 @@
+public List<String> wordBreak(String s, List<String> wordDict) {
+        HashSet<String> h = new HashSet<>();
+        for(String g:wordDict) h.add(g);
+        List<String> ans= new ArrayList<>();
+        boolean dp[]= new boolean[s.length()+1];
+        dp[0]=true;
+        solve(s,h,ans,0,"",dp);
+        return ans;
+    }
+    public static void solve(String s,HashSet<String> h,List<String> ans,int ind,String path,boolean dp[]){
+        if(ind==s.length()){
+            ans.add(path);
+            return;
+        }
+        for(int j=ind;j<=s.length();j++){
+            if(dp[ind] && h.contains(s.substring(ind,j))){
+                dp[j]=true;
+                String temp=path;
+                path+=s.substring(ind,j);
+                if(j!=s.length())
+                  path+=" ";
+                solve(s,h,ans,j,path,dp);
+                path=temp;  
+            }
+        }
+    }
