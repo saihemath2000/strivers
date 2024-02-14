@@ -1,0 +1,36 @@
+public static String graphColoring(int [][]mat, int m) {
+        // Write your code here
+        List<Integer>[] G = new ArrayList[mat.length];
+        for (int i=0;i<mat.length;i++) {
+            G[i] = new ArrayList<>();
+        }
+        for(int i=0;i<mat.length;i++){
+            for(int j=0;j<mat[0].length;j++){
+                if(mat[i][j]==1){
+                    G[i].add(j);
+                }
+            }
+        }
+        int color[]= new int[mat.length];
+        if(solve(G,m,0,color,mat.length))
+          return "YES";
+        return "NO";  
+    }
+    public static boolean solve(List<Integer>[] G,int m,int ind,int color[],int n){
+       if(ind==n)
+         return true;
+       for(int i=1;i<=m;i++){
+           if(issafe(G,m,ind,i,color)){
+             color[ind]=i;
+             if(solve(G,m,ind+1,color,n)) return true;
+             color[ind]=0;    
+           }
+       }
+       return false;  
+    }
+    public static boolean issafe(List<Integer>[] G ,int m,int node,int i,int color[]){
+        for(int k:G[node]){
+            if(color[k]==i) return false;
+        }
+        return true;
+    }
