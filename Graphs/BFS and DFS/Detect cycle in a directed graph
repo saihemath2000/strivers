@@ -1,0 +1,39 @@
+public static Boolean isCyclic(int[][] edges, int v, int e)
+    {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+        for(int i=0;i<v;i++)
+          adj.add(new ArrayList<Integer>());
+        for(int i=0;i<e;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+        }
+        int vis[] = new int[v];
+        int pathVis[] = new int[v];
+        for(int i = 0;i<v;i++) {
+            if(vis[i] == 0) {
+                if(dfsCheck(i, adj, vis, pathVis)) return true; 
+            }
+        }
+        return false;    
+	}
+    static boolean dfsCheck(int node, ArrayList<ArrayList<Integer>> adj, int vis[], int pathVis[]) {
+        vis[node] = 1; 
+        pathVis[node] = 1; 
+        
+        // traverse for adjacent nodes 
+        for(int it : adj.get(node)) {
+            // when the node is not visited 
+            if(vis[it] == 0) {
+                if(dfsCheck(it, adj, vis, pathVis) == true) 
+                    return true; 
+            }
+            // if the node has been previously visited
+            // but it has to be visited on the same path 
+            else if(pathVis[it] == 1) {
+                return true; 
+            }
+        }
+        
+        pathVis[node] = 0; 
+        return false; 
+    }
