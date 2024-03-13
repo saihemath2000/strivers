@@ -1,0 +1,45 @@
+import java.util.*;
+public class Solution {
+    public static List<List< String >> shortestTransitionPaths(String start, String finish, List< String > wordPool) {
+        // Write your code here.
+        List<List<String>> ans= new ArrayList<>();
+        Queue<ArrayList<String>> q = new ArrayDeque<>();
+        ArrayList<String> temp= new ArrayList<>();
+        temp.add(start);
+        q.add(temp);
+        int level=0;
+        HashSet<String> h = new HashSet<>();
+        for(int i=0;i<wordPool.size();i++) h.add(wordPool.get(i));
+        ArrayList<String> used = new ArrayList<>();
+        used.add(start);
+        while(!q.isEmpty()){
+           ArrayList<String> curr=q.poll();
+           if(curr.size()>level){
+               level++;
+               for(String s:used)
+                  h.remove(s);
+           }
+
+           String word= curr.get(curr.size()-1);
+           if(word.equals(finish)){
+               if(ans.size()==0) ans.add(curr);
+               else if(ans.get(0).size()==curr.size()) ans.add(curr);
+           }
+           for(int i=0;i<word.length();i++){
+               for(char c='a';c<='z';c++){
+                   char temp1[]= word.toCharArray();
+                   temp1[i]=c;
+                   String st1= new String(temp1);
+                   if(h.contains(st1)){
+                       curr.add(st1);
+                       ArrayList<String> temp2= new ArrayList<>(curr);
+                       q.add(temp2);
+                       used.add(st1);
+                       curr.remove(curr.size()-1);
+                   }
+               }
+           }  
+        }
+        return ans;
+    }
+}
