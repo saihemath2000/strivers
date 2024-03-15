@@ -1,0 +1,50 @@
+public int[] findOrder(int numCourses, int[][] prerequisites) {
+        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+        int ans[]= new int[numCourses];
+        if(prerequisites.length==0){
+            for(int i=0;i<numCourses;i++) ans[i]=i;
+            return ans;
+        }
+        int n= prerequisites.length,m= prerequisites[0].length;
+        
+        Queue<Integer> q = new ArrayDeque<>();
+        Stack<Integer> st= new Stack<>();
+        boolean visited[]= new boolean[numCourses];
+        int indegree[]= new int[numCourses];
+        for(int i=0;i<numCourses;i++)
+           adj.add(new ArrayList<Integer>());
+        for(int i=0;i<n;i++){
+           adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
+           indegree[prerequisites[i][0]]++; 
+        }
+        for(int i=0;i<numCourses;i++){
+            if(indegree[i]==0) q.add(i);
+        }
+        while(!q.isEmpty()){
+            int u=q.poll();
+            for(int v:adj.get(u)){
+                indegree[v]--;
+                if(indegree[v]==0) q.add(v);
+            }
+        }
+        for(int i=0;i<numCourses;i++){
+            if(indegree[i]!=0) return  new int[0];
+        }
+        for(int i=0;i<numCourses;i++){
+            if(visited[i]==false)
+              dfs(visited,adj,i,st);
+        }
+        int i=0;
+        while(!st.isEmpty()){
+            ans[i++]=st.pop(); 
+        }
+        return ans;
+    }
+    static void dfs(boolean visited[],ArrayList<ArrayList<Integer>> adj,int s,Stack<Integer> st){
+        visited[s]=true;
+        for(int v:adj.get(s)){
+            if(visited[v]==false)
+               dfs(visited,adj,v,st);
+        }
+        st.push(s);
+    }
