@@ -1,0 +1,47 @@
+import java.util.*;
+class DisjointSet{
+    static ArrayList<Integer> rank= new ArrayList<>();
+    static ArrayList<Integer> parent= new ArrayList<>();
+    DisjointSet(int V){
+        for(int i=0;i<=V;i++){
+           parent.add(i);
+           rank.add(0);
+        }
+    }
+    public static int findpar(int a){
+        if(a==parent.get(a))
+         return a;
+        int pa=findpar(parent.get(a));
+        parent.set(a,pa);
+        return parent.get(a); 
+    }
+    public static void union(int a,int b){
+        int pa= findpar(a),pb=findpar(b);
+        if(pa==pb) return;
+        if(rank.get(pa)<rank.get(pb))
+           parent.set(pa,pb);
+        else if(rank.get(pa)>rank.get(pb))
+          parent.set(pb,pa);
+        else{
+            parent.set(pa,pb);
+            int rankpb= rank.get(pb);
+            rank.set(pb,rankpb+1);
+        }  
+    }
+}
+public class Solution {
+    public static int kruskalMST(int n,int [][]edges) {
+        //Write your code here
+        DisjointSet ds= new DisjointSet(n);
+        int ans=0;
+        Arrays.sort(edges, Comparator.comparingInt(a -> a[2]));
+        for(int i=0;i<edges.length;i++){
+            int u= edges[i][0],v=edges[i][1],wt=edges[i][2];
+            if(ds.findpar(u)!=ds.findpar(v)){
+                  ans+=wt;
+                  ds.union(u,v);
+            }
+        }
+        return ans;
+    }
+}
