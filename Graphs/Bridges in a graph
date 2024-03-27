@@ -1,0 +1,34 @@
+import java.util.*;
+public class Solution {
+    static int timer=1;
+    public static List<List<Integer>> findBridges(int[][] edges, int v, int e) {
+       List<List<Integer>> ans= new ArrayList<>();
+       ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+       boolean visited[]= new boolean[v];
+       int toi []= new int[v];
+       int low[]= new int[v];
+       for(int i=0;i<v;i++) adj.add(new ArrayList<>());
+       for(int i=0;i<edges.length;i++){
+           adj.get(edges[i][0]).add(edges[i][1]);
+           adj.get(edges[i][1]).add(edges[i][0]);
+       }
+       dfs(0,-1,visited,adj,ans,toi,low);
+       return ans;  
+    }
+    static void dfs(int s,int parent, boolean visited[],ArrayList<ArrayList<Integer>> adj,List<List<Integer>> ans,int toi[],int low[]){
+         visited[s]=true;
+         toi[s]=low[s]=timer;
+         timer++;
+         for(int it:adj.get(s)){
+             if(it==parent) continue;
+             if(visited[it]==false){
+                 dfs(it,s,visited,adj,ans,toi,low);
+                 low[s]=Math.min(low[s],low[it]);
+                 if(low[it]>toi[s])
+                    ans.add(Arrays.asList(it,s));
+             }
+             else
+               low[s]=Math.min(low[s],low[it]); 
+         } 
+    }
+}
