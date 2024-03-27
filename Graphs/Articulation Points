@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+public class Solution{
+
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        Scanner sc= new Scanner(System.in);
+        int T= sc.nextInt();
+        while(T-->0){
+            int vertices= sc.nextInt();
+            int ed= sc.nextInt();
+            ArrayList<ArrayList<Integer>> edges= new ArrayList<>();
+            for(int i=0;i<ed;i++){
+                 List<Integer> edge = Arrays.asList(sc.nextInt(), sc.nextInt());
+                 edges.add(new ArrayList<>(edge));
+            }
+            ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+            for(int i=0;i<=vertices;i++) adj.add(new ArrayList<>());
+            for(int i=0;i<ed;i++){
+                adj.get(edges.get(i).get(0)).add(edges.get(i).get(1));
+                adj.get(edges.get(i).get(1)).add(edges.get(i).get(0));
+            }
+            boolean visited[]= new boolean[vertices+1];
+            int mark[]= new int[vertices+1];
+            int toi[]= new int[vertices+1];
+            int low[]= new int[vertices+1];
+            for(int i=1;i<=vertices;i++){
+                if(visited[i]==false)
+                   dfs(i,-1,1,mark,toi,low,visited,adj);
+            }
+            for(int i=1;i<=vertices;i++){
+                if(mark[i]==1)
+                  System.out.print(i+" ");
+            }
+            System.out.println();
+        }  
+	}
+    static void dfs(int s,int parent,int timer,int mark[],int toi[],int low[],boolean visited[],ArrayList<ArrayList<Integer>> adj){
+          visited[s]=true;
+          toi[s]=low[s]=timer;
+          timer++;
+          int child=0;
+          for(int it:adj.get(s)){
+              if(it==parent) continue;
+              if(visited[it]==false){
+                  dfs(it,s,timer,mark,toi,low,visited,adj);
+                  low[s]=Math.min(low[s],low[it]);
+                  if(low[it]>=toi[s] && parent!=-1)
+                     mark[s]=1;
+                child++;   
+              }
+              else{
+                  low[s]= Math.min(low[s],toi[it]);
+              }
+          } 
+        if(child>1 && parent==-1)
+          mark[s]=1;
+    }
+}
