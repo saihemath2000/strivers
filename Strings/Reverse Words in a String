@@ -1,0 +1,13 @@
+public static String reverseString(String str) 
+	{
+		//Write your code here
+		String words[]= str.trim().split("\\s+");
+		StringBuffer ans= new StringBuffer("");
+		ans.append(words[words.length-1]);
+		ans.append(" ");
+		for(int i=words.length-2;i>=0;i--){
+			ans.append(words[i]);
+			ans.append(" ");
+		}
+		return ans.toString();
+	}
