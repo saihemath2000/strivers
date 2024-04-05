@@ -1,0 +1,5 @@
+.trim()
+.split("\\s+")
+.indexOf() ---> first occurence of a substring in a string
+.startsWith()
+.substring()
