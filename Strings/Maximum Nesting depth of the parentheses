@@ -1,0 +1,12 @@
+  public static int maxDepth(String s) {
+        // Write your code here.
+        int track=0,ans=0;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='('){
+               track++;
+               ans=Math.max(ans,track);
+            }
+            else if(s.charAt(i)==')') track--;
+        }
+        return ans;
+    }
