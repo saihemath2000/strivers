@@ -1,0 +1,19 @@
+public static int createAtoi(String str) {
+        // Write your code here.
+        double ans=0,sign=1;
+        for(int i=0;i<str.length();i++){
+            char c=str.charAt(i);
+            if(i==0 && (c=='-'||c=='+')){
+                if(c=='-') sign=-1;
+               continue;
+            }
+            else if(c=='0' && ans==0) continue;
+            else if(!(c>='0' && c<='9')) break;
+            else 
+             ans= ans*10+(c-'0');  
+        }
+        ans=ans*sign;
+        if(ans>=Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        else if(ans<=Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        return (int)ans;  
+    }
