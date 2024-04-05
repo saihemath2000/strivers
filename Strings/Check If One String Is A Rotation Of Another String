@@ -1,0 +1,10 @@
+public static int isCyclicRotation(String p, String q)  {
+         String original=p;
+         while(!p.equals(q)){
+             String temp=p.charAt(p.length()-1)+p.substring(0,p.length()-1);
+             if(temp.equals(original)) break;
+             if(temp.equals(q)) return 1;
+             p=temp;
+         }
+         return 0;
+}
