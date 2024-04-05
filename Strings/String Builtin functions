@@ -3,3 +3,6 @@
 .indexOf() ---> first occurence of a substring in a string
 .startsWith()
 .substring()
+new String()
+.toCharArray();
+isLowerCase(),isUpperCase(),toLowerCase(),toUpperCase()
