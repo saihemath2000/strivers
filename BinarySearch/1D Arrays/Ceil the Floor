@@ -1,0 +1,12 @@
+public static int ceilingInSortedArray(int n, int x, int[] arr) {
+        // Write your code here.
+        TreeSet<Integer> t = new TreeSet<>();
+        for(int y:arr) t.add(y);
+        if(t.floor(x)==null){
+            System.out.print(-1+" ");
+        }
+        else
+           System.out.print(t.floor(x)+" ");
+        if(t.ceiling(x)==null) return -1;
+        else return t.ceiling(x);
+}
