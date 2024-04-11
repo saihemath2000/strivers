@@ -1,0 +1,16 @@
+public static int searchInsert(int [] arr, int m){
+        // Write your code here.
+        int low=0,high=arr.length-1,ans=0;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid]==m) return mid;
+            else if(arr[mid]<m){
+                ans=mid+1;
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        return ans;
+  }
