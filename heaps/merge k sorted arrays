@@ -1,0 +1,34 @@
+public static ArrayList<Integer> mergeKSortedArrays(ArrayList<ArrayList<Integer>> kArrays, int k) {
+        ArrayList<Integer> first = kArrays.get(0);
+
+        for (int i = 1; i < k; i++) {
+            ArrayList<Integer> sec = kArrays.get(i);
+            int p = 0, q = 0;
+            ArrayList<Integer> merged = new ArrayList<>();
+
+            // Merge the two arrays
+            while (p < first.size() && q < sec.size()) {
+                if (first.get(p) <= sec.get(q)) {
+                    merged.add(first.get(p));
+                    p++;
+                } else {
+                    merged.add(sec.get(q));
+                    q++;
+                }
+            }
+
+            // Add remaining elements from both arrays
+            while (p < first.size()) {
+                merged.add(first.get(p));
+                p++;
+            }
+            while (q < sec.size()) {
+                merged.add(sec.get(q));
+                q++;
+            }
+
+            first = merged; // Update the merged array for next iteration
+        }
+
+        return first;
+    }
