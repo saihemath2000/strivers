@@ -1,0 +1,67 @@
+static class MinHeap {
+
+       int heap[];
+       int size;
+       int capacity;
+        MinHeap(int size) {
+            // Write your code here.
+            heap= new int[size];
+            capacity=size;
+            size=0;
+        }
+        void heapify(int i){
+            int smallest=i;
+            int l=2*i+1,r=2*i+2;
+            if(l<size && heap[l]<heap[smallest]) smallest=l;
+            if(r<size && heap[r]<heap[smallest]) smallest=r;
+            if(smallest!=i){
+                int temp=heap[i];
+                heap[i]=heap[smallest];
+                heap[smallest]=temp;
+                heapify(smallest);
+            }
+        }
+
+        // Implement the function to remove minimum element.
+        int extractMinElement() {
+            // Write you code here.e
+            if(size==0) return -1;
+            int ans=heap[0];
+            int temp=heap[0];
+            heap[0]=heap[size-1];
+            heap[size-1]=temp;
+            size--;
+            heapify(0);
+            return ans;
+        }
+
+        // Implement the function to delete an element.
+        void deleteElement(int ind) {
+            // Write you code here.
+            if(ind>=size) return;
+            int temp=heap[ind];
+            heap[ind]=heap[size-1];
+            heap[size-1]=temp;
+            size--;
+            heapify(ind);
+        }
+
+        // Implement the function to insert 'val' in the heap.
+        void insert(int val) {
+            // Write you code here.
+            if(size==capacity) return;
+            heap[size]=val;
+            size++;
+            int ind=size-1;
+            while(ind>=0){
+                int parent= (ind-1)/2;
+                if(heap[parent]>heap[ind]){
+                    int temp=heap[parent];
+                    heap[parent]=heap[ind];
+                    heap[ind]=temp;
+                    ind=parent;
+                }
+                else break;
+            }
+        }
+    }
