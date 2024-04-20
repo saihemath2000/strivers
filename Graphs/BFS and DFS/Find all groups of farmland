@@ -1,0 +1,65 @@
+//DFS 
+
+public int[][] findFarmland(int[][] land) {
+    int m = land.length, n = land[0].length;
+    boolean visited[][] = new boolean[m][n];
+    List<int[]> result = new ArrayList<>();
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (land[i][j] == 1 && !visited[i][j]) {
+                int temp1[]= dfs(land, i, j, visited);
+                int temp[]= {i,j,temp1[0],temp1[1]};
+                result.add(temp);
+            }
+        }
+    }
+    return result.toArray(new int[result.size()][]);
+}
+
+static int[] dfs(int land[][], int i, int j, boolean visited[][]) {
+    if(i>=0 && i<land.length && j>=0 && j<land[0].length && visited[i][j]==false && land[i][j]==1){
+        visited[i][j]=true;
+        int v1[] = dfs(land,i+1,j,visited);
+        int v2[]= dfs(land,i-1,j,visited);
+        int v3[] = dfs(land,i,j+1,visited);
+        int v4[] = dfs(land,i,j-1,visited);
+        int  maxr=Math.max(Math.max(Math.max(Math.max(i,v1[0]),v2[0]),v3[0]),v4[0]);
+        int  maxc=Math.max(Math.max(Math.max(Math.max(j,v1[1]),v2[1]),v3[1]),v4[1]);
+        return new int[]{maxr,maxc};
+    }
+    return new int[]{Integer.MIN_VALUE,Integer.MIN_VALUE};
+}
+
+
+// dfs global
+class Solution {
+    static int maxr=0,maxc=0;
+    public int[][] findFarmland(int[][] land) {
+    int m = land.length, n = land[0].length;
+    boolean visited[][] = new boolean[m][n];
+    List<int[]> result = new ArrayList<>();
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (land[i][j] == 1 && !visited[i][j]) {
+                dfs(land, i, j, visited);
+                int temp[]= {i,j,maxr,maxc};
+                result.add(temp);
+                maxr=0;
+                maxc=0;
+            }
+        }
+    }
+    return result.toArray(new int[result.size()][]);
+}
+
+static void dfs(int land[][], int i, int j, boolean visited[][]) {
+    if(i>=0 && i<land.length && j>=0 && j<land[0].length && visited[i][j]==false && land[i][j]==1){
+        visited[i][j]=true;
+        dfs(land,i+1,j,visited);
+        dfs(land,i-1,j,visited);
+        dfs(land,i,j+1,visited);
+        dfs(land,i,j-1,visited);
+        maxr=Math.max(maxr,i);
+        maxc=Math.max(maxc,j);
+    }
+}
