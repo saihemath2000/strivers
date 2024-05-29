@@ -1,0 +1,21 @@
+public boolean isPalindrome(String s) {
+        String our="";
+        for(int i=0;i<s.length();i++){
+            char c= s.charAt(i);
+            if((c>='a'&& c<='z')|| (c>='0' && c<='9')){
+                our+=c; 
+            }
+            else if(c>='A' && c<='Z'){
+                our=our+(Character.toLowerCase(c));
+            }
+        }
+        if(our.equals("")) return true;
+        String temp = reverse(our.length()-1,our,"");
+        if(temp.equals(our)) return true;
+        return false;
+    }
+    static String reverse(int ind,String org,String reversed){
+        if(ind==0) return reversed+org.charAt(0);
+        reversed+=org.charAt(ind);
+        return reverse(ind-1,org,reversed); 
+    }
