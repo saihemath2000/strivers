@@ -1,0 +1,10 @@
+public int fib(int n) {
+        if(n==0) return 0;
+        if(n==1) return 1;
+        int ind=2;
+        return recursion(ind,1,1,n);
+    }
+int recursion(int ind,int prev,int curr,int n){
+        if(ind==n) return curr;
+        return recursion(ind+1,curr,curr+prev,n);
+}
