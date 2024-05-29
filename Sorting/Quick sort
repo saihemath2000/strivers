@@ -1,0 +1,28 @@
+static void quickSort(int arr[], int low, int high)
+    {
+        // code here
+        if(low<high){
+            int ind= partition(arr,low,high);
+            quickSort(arr,low,ind-1);
+            quickSort(arr,ind+1,high);
+        }
+    }
+    static int partition(int arr[], int low, int high)
+    {
+        // your code here
+        int pivot= arr[low];
+        int i=low,j=high;
+        while(i<j){
+            while(arr[i]<=pivot && i<high) i++;
+            while(arr[j]>=pivot && j>low) j--;
+            if(i<j){
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+            }
+        }
+        int temp=arr[j];
+        arr[j]=arr[low];
+        arr[low]=temp;
+        return j;
+    }
