@@ -1,0 +1,13 @@
+static ArrayList<Long> factorialNumbers(long N){
+        // code here
+        ArrayList<Long> ans= new ArrayList<>();
+        solve(N,ans,2,1);
+        return ans;
+    }
+    static void solve(long n,ArrayList<Long> ans,long i,long fact){
+        if(fact>n) return;
+        ans.add(fact);
+        fact*=i;
+        solve(n,ans,i+1,fact);
+        return;
+    }
