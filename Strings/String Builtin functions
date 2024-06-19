@@ -1,6 +1,7 @@
 .trim()
 .split("\\s+")
 .indexOf() ---> first occurence of a substring in a string
+.contains()
 .startsWith()
 .substring()
 new String()
