@@ -1,0 +1,34 @@
+class Solution {
+    public int strStr(String haystack, String needle) {
+        String main=needle+"$"+haystack;
+        int zarr[]= cal(main.toCharArray());
+        for(int i=0;i<zarr.length;i++){
+            if(zarr[i]==needle.length()) return i-needle.length()-1;
+        }
+        return -1;
+    }
+    static int[] cal(char arr[]){
+        int n=arr.length;
+        int z[]= new int[n];
+        int left=0,right=0;
+        for(int k=1;k<n;k++){
+            if(k>right){
+                left=right=k;
+                while(right<n && arr[right]==arr[right-left]) right++;
+                z[k]=right-left;
+                right--;
+            }
+            else{
+                int k1=k-left;
+                if(z[k1]<right-k+1) z[k]=z[k1];
+                else{
+                    left=k;
+                    while(right<n && arr[right]==arr[right-left]) right++;
+                    z[k]=right-left;
+                    right--;
+                }
+            }
+        }
+        return z;
+    }
+}
