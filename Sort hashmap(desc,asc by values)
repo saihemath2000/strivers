@@ -20,3 +20,7 @@ List<Map.Entry<String, Integer>> entryList = new ArrayList<>(sortedByKey.entrySe
         for (Map.Entry<String, Integer> entry : entryList) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+
+
+list.sort(Map.Entry.<Integer, Integer>comparingByValue()
+        .thenComparing(Map.Entry.<Integer, Integer>comparingByKey().reversed()));
