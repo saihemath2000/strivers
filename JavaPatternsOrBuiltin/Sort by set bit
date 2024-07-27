@@ -1,0 +1,45 @@
+public static void sortBySetBitCount(Integer arr[], int n) { 
+        // Create a list of the original array with the set bit counts
+        List<Pair> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(new Pair(arr[i], countSetBits(arr[i]), i));
+        }
+
+        // Sort the list based on the number of set bits in descending order
+        // For equal number of set bits, maintain the original order
+        list.sort((a, b) -> {
+            if (b.setBitCount != a.setBitCount) {
+                return b.setBitCount - a.setBitCount;
+            } else {
+                return a.index - b.index; // maintain original order
+            }
+        });
+
+        // Place the sorted values back into the original array
+        for (int i = 0; i < n; i++) {
+            arr[i] = list.get(i).value;
+        }
+    } 
+
+    // Function to count the number of set bits in an integer
+    public static int countSetBits(int n) {
+        int count = 0;
+        while (n > 0) {
+            n &= (n - 1); // Flip the least significant set bit to zero
+            count++;
+        }
+        return count;
+    }
+
+    // Pair class to store value, set bit count, and original index
+    static class Pair {
+        int value;
+        int setBitCount;
+        int index;
+
+        Pair(int value, int setBitCount, int index) {
+            this.value = value;
+            this.setBitCount = setBitCount;
+            this.index = index;
+        }
+    }
