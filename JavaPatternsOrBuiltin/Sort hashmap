@@ -1,0 +1,26 @@
+//Descending
+public static void main(String[] args) {
+	   Map<Character,Integer> h= new HashMap<>();
+	   for(char c='a';c<='z';c++) h.put(c,c-'a');
+	   //for(Map.Entry<Character,Integer> e:h.entrySet()){
+	   //    System.out.println(e.getKey()+"-"+e.getValue());
+	   //}
+	   List<Map.Entry<Character,Integer>> list= new ArrayList<>(h.entrySet());
+	   list.sort(Map.Entry.<Character,Integer>comparingByValue(Comparator.reverseOrder()));
+	   for(Map.Entry<Character,Integer> e:list){
+	       System.out.println(e.getKey()+"-"+e.getValue());
+	   }
+}
+
+//Ascending
+List<Map.Entry<String, Integer>> entryList = new ArrayList<>(sortedByKey.entrySet());
+        entryList.sort(Map.Entry.comparingByValue());
+
+        System.out.println("Sorted by values after sorting by keys:");
+        for (Map.Entry<String, Integer> entry : entryList) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+
+
+list.sort(Map.Entry.<Integer, Integer>comparingByValue()
+        .thenComparing(Map.Entry.<Integer, Integer>comparingByKey().reversed()));
