@@ -1,0 +1,25 @@
+ private String getDuplicateSubstring(String s, int len) {
+        long mod = (1L << 31) - 1;
+        long base = 256;
+        long hash = 0;
+        long power = 1;
+        Set<Long> seenHashes = new HashSet<>();
+        
+        // Compute hash of the first `len` length substring
+        for (int i = 0; i < len; i++) {
+            hash = (hash * base + s.charAt(i)) % mod;
+            power = (power * base) % mod;
+        }
+        seenHashes.add(hash);
+        
+        // Rolling hash: move window of size `len` over the string
+        for (int i = len; i < s.length(); i++) {
+            hash = (hash * base - s.charAt(i - len) * power % mod + mod) % mod;
+            hash = (hash + s.charAt(i)) % mod;
+            if (!seenHashes.add(hash)) {
+                return s.substring(i - len + 1, i + 1);
+            }
+        }
+        
+        return null;
+    }
